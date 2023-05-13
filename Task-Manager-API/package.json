@@ -4,7 +4,8 @@
   "description": "The Task Manager API is a RESTful API that allows users to manage their tasks. Users can create, read, update, and delete tasks. Each task has a title, description, and status (e.g., \"completed,\" \"in progress,\" or \"pending\"). The API also supports user authentication, allowing users to register, login, and manage their own tasks.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "server.js"
   },
   "keywords": [],
   "author": "",
@@ -14,5 +15,8 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
