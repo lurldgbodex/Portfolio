@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
+const crypto = require('crypto')
 const host = process.env.DB_HOST || 'localhost';
 const port = process.env.DB_PORT || 27017;
 const db = process.env.DB || 'task_manager';
-const jwt_key = process.env.JWT_KEY || 'secret-key';
 const MONGODB_URI= `mongodb://${host}:${port}/${db}`
+
+const JWT_SECRET = crypto.randomBytes(64).toString('hex')
 
 const db_connect = async () => {
     try {
@@ -16,6 +18,6 @@ const db_connect = async () => {
 }
 
 module.exports = {
-    JWT_SECRET: `${jwt_key}`,
+    JWT_SECRET,
     db_connect
 };

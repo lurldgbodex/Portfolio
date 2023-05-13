@@ -4,8 +4,15 @@ const config = require('./config/config');
 const app = express();
 const port = process.env.PORT || 3000
 
-//start database
+// start database
 config.db_connect();
+
+// set up middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// set up routes
+app.use('/api/users', require('./routes/auth'))
 
 // start express Server
 app.listen(port, () => {
