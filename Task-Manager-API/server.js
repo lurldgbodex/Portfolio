@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // set up routes
 app.use('/api/users', require('./routes/auth'))
+app.use('/api', require('./routes/tasks'))
 
 // start express Server
 app.listen(port, () => {
