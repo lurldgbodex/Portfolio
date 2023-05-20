@@ -14,6 +14,10 @@ const taskSchema = new mongoose.Schema({
         enum: ['TODO', 'IN_PROGRESS', 'DONE'],
         default: 'TODO',
     },
+    userId: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Users'
+    },
     createdAt: {
         type: Date,
         default: Date.now,
