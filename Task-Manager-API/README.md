@@ -1,4 +1,4 @@
-Task Manager API
+# Task Manager API
 
 The Task Manager API is a RESTful web service that provides endpoints for managing tasks and user authentication. It allows users to create, retrieve, update, and delete tasks, as well as register and log in to user accounts.
 Features
@@ -10,7 +10,7 @@ Features
     Update task: Authenticated users can update the title or description of their own tasks.
     Delete task: Authenticated users can delete their own tasks.
 
-Technologies Used
+## Technologies Used
 
 The Task Manager API is built using the following technologies:
 
@@ -20,7 +20,7 @@ The Task Manager API is built using the following technologies:
     Mongoose: An Object Data Modeling (ODM) library for MongoDB, used to define data models and interact with the database.
     JSON Web Tokens (JWT): A method for securely transmitting information as JSON objects, used for user authentication and authorization.
 
-Getting Started
+## Getting Started
 
 To set up and run the Task Manager API locally, follow these steps:
 
@@ -36,20 +36,21 @@ To set up and run the Task Manager API locally, follow these steps:
     Start the server: npm start
     The API will be accessible at http://localhost:3000.
 
-API Endpoints
-User Registration
+## API Endpoints
+
+### User Registration
 
     POST /api/users/register
         Request body: { "name": "John Doe", "email": "john@example.com", "password": "password" }
         Creates a new user account with the provided name, email, and password.
 
-User Login
+### User Login
 
     POST /api/users/login
         Request body: { "email": "john@example.com", "password": "password" }
         Returns an access token if the email and password are valid, which can be used for authentication.
 
-Task Management
+### Task Management
 
     POST /api/tasks
         Request body: { "title": "Task Title", "description": "Task Description" }
@@ -68,12 +69,13 @@ Task Management
     DELETE /api/tasks/:taskId
         Deletes the specified task. Requires authentication and ownership of the task.
 
-Error Handling
+## Error Handling
 
 The API includes centralized error handling to provide consistent and meaningful error responses. If an error occurs during a request, the API will return an appropriate HTTP status code and an error message in the response body.
 Authentication
 
 The Task Manager API uses JSON Web Tokens (JWT) for user authentication. Upon successful login, an access token is generated and returned to the client. The client should include this access token in the Authorization header of subsequent requests to access protected endpoints.
-Conclusion
+
+## Conclusion
 
 The Task Manager API provides a simple and secure way to manage tasks and user accounts. By following the documentation and utilizing the provided endpoints, developers can build task management applications that integrate seamlessly with the API.
