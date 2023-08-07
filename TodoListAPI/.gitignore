@@ -1,0 +1,35 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches and logs
+*.log
+*.pid
+*.pyo
+*.swp
+
+# Database
+db.sqlite3
+
+# Static files
+/static/
+media/
+
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Temporary files
+*.bak
+*.tmp
+
+# Virtual environment
+venv/
+.env
+
+# Visual Studio Code
+.vscode/
