@@ -63,6 +63,13 @@ describe("RedisClient", () => {
     });
   });
 
+  describe("Redis flushall()", () => {
+    it("should return true if succussful", async () => {
+      const res = await redisClient.flushall();
+      expect(res).to.be.true;
+    });
+  });
+
   describe("Redis connection isAlive", () => {
     it("should return true if redis client is alive", async () => {
       const isAlive = await redisClient.isAlive();

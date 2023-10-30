@@ -16,7 +16,6 @@ class RedisClient {
       const active = await this.client.ping();
       return Boolean(active);
     } catch (err) {
-      console.log(`Redis check connection ${err}`);
       return false;
     }
   }
@@ -26,7 +25,6 @@ class RedisClient {
       const value = await this.client.get(key);
       return value;
     } catch (err) {
-      console.log(`Redis get Value ${err}`);
       return null;
     }
   }
@@ -36,7 +34,6 @@ class RedisClient {
       await this.client.set(key, value, { EX: duration });
       return true;
     } catch (err) {
-      console.error(`Redis set value ${err}`);
       return false;
     }
   }
@@ -46,7 +43,6 @@ class RedisClient {
       await this.client.del(key);
       return true;
     } catch (err) {
-      console.error(`Redis del key ${err}`);
       return false;
     }
   }
@@ -56,7 +52,15 @@ class RedisClient {
       await this.client.disconnect();
       return true;
     } catch (err) {
-      console.error(`Unable to disconnect redis client: ${err}`);
+      return false;
+    }
+  }
+
+  async flushall() {
+    try {
+      await this.client.flushAll();
+      return true;
+    } catch (err) {
       return false;
     }
   }
