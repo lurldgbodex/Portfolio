@@ -105,8 +105,10 @@ class Transaction(db.Model, DbMethods):
 
     id = db.Column(db.Integer, primary_key=True)
     transaction_type = db.Column(
-        db.Enum('Deposit', 'Withdrawal', 'Transfer'), nullable=False)
+        db.Enum('credit', 'debit'), nullable=False)
     amount = db.Column(db.Float, nullable=False)
+    status = db.Column(db.Enum('success', 'failed',
+                       'reversed'), nullable=False)
     description = db.Column(db.String(100), nullable=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     sender_id = db.Column(
@@ -114,16 +116,19 @@ class Transaction(db.Model, DbMethods):
     receiver_id = db.Column(
         db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    def __init__(self, amount, sender, receiver, type, description=None):
+    sender = db.relationship('User', foreign_keys=[sender_id])
+    receiver = db.relationship('User', foreign_keys=[receiver_id])
+
+    def __init__(self, amount, sender, receiver, type, description=None, status='success'):
         self.amount = amount
         self.transaction_type = type
         self.sender_id = sender
         self.receiver_id = receiver
         self.description = description
+        self.status = status
+
 
 # Define the Payment model
-
-
 class Payment(db.Model, DbMethods):
     __tablename__ = 'payments'
 

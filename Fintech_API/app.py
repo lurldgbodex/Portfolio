@@ -2,7 +2,7 @@ from flask import Flask, jsonify, abort
 from flask_restful import Resource, Api, reqparse
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 import bcrypt
-from models import db, User, Loan, Repayment
+from models import db, User, Loan, Repayment, Transaction
 from config import config_by_name
 from validate import validate_due_date, validate_loan_repay
 
@@ -32,6 +32,13 @@ loan_parser.add_argument('due_date', type=int, default=30)
 
 loan_repay = reqparse.RequestParser()
 loan_repay.add_argument('type', type=validate_loan_repay, default='FULL')
+
+transaction_parser = reqparse.RequestParser()
+transaction_parser.add_argument('amount', type=float, required=True,
+                                help='Damn! provide the amount you want to send you dumb head')
+transaction_parser.add_argument(
+    'receiver', type=str, required=True, help='do i have to tell you to provide the reciever?')
+transaction_parser.add_argument('description', type=str, default=None)
 
 
 def create_app(config_name):
@@ -287,6 +294,100 @@ class LoanRepayment(Resource):
             db.session.commit()
 
 
+class LoanHistory(Resource):
+    @jwt_required()
+    def get(self):
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(username=current_user).first_or_404()
+
+        loans_history = db.session.query(Loan, Repayment).join(
+            Repayment).filter(Loan.user_id == user.id).all()
+
+        loan_history_data = []
+        for loan, repayment in loans_history:
+            interest = loan.amount - (loan.amount * loan.interest_rate)
+            loan_data = {
+                'loan_id': loan.id,
+                'loan_amount': loan.amount,
+                'loan_status': loan.status,
+                'interest': interest,
+                'Loan_date': loan.timestamp,
+                'repayment_amount': repayment.amount,
+                'repayment_date': repayment.timestamp
+            }
+
+            loan_history_data.append(loan_data)
+
+        return jsonify({'loan_history': loan_history_data})
+
+
+class SendMoney(Resource):
+    @jwt_required()
+    def post(self):
+        args = transaction_parser.parse_args()
+        receiver_username = args['receiver']
+        transaction_amount = args['amount']
+        description = args['description']
+        current_user = get_jwt_identity()
+        sender = User.query.filter_by(username=current_user).first_or_404()
+        receiver = User.query.filter_by(
+            username=receiver_username).first_or_404()
+
+        if sender.balance < transaction_amount:
+            return {'message': 'Don\'t be a thief, trying to send money you don\'t have'}, 400
+
+        transaction = Transaction(
+            sender=sender.id,
+            receiver=receiver.id,
+            amount=transaction_amount,
+            status='success',
+            description=description,
+            type='debit'
+        )
+
+        transaction.insert()
+
+        sender.balance -= transaction_amount
+        receiver.balance += transaction_amount
+        # receiver.type = 'credit'
+        sender.update()
+        receiver.update()
+
+        return {'message': 'Money sent successfully'}
+
+
+class TransactionnHistory(Resource):
+    @jwt_required()
+    def get(self):
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(username=current_user).first_or_404()
+
+        transactions = Transaction.query.filter(
+            (Transaction.sender_id == user.id) | (
+                Transaction.receiver_id == user.id)
+        ).all()
+        transaction_history = []
+        for transaction in transactions:
+            transaction_data = {
+                'id': transaction.id,
+                'sender': transaction.sender.username,
+                'receiver': transaction.receiver.username,
+                'amount': transaction.amount,
+                'status': transaction.status,
+                'timestamp': transaction.timestamp
+            }
+            transaction_history.append(transaction_data)
+        return jsonify({'transactions': transaction_history})
+
+
+class UserBalance(Resource):
+    @jwt_required()
+    def get(self):
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(username=current_user).first_or_404()
+        return {'balance': user.balance}
+
+
 api.add_resource(Register, '/users/register')
 api.add_resource(Login, '/users/login')
 api.add_resource(UserProfile, '/users/profile')
@@ -294,6 +395,10 @@ api.add_resource(LoanApplication, '/loans/application')
 api.add_resource(LoanApproval, '/loans/approval/<int:loan_id>')
 api.add_resource(LoanDisbursement, '/loans/disbursement/<int:loan_id>')
 api.add_resource(LoanRepayment, '/loans/repayment/<int:loan_id>')
+api.add_resource(LoanHistory, '/loans/history')
+api.add_resource(SendMoney, '/transactions/send')
+api.add_resource(TransactionnHistory, '/transactions/history')
+api.add_resource(UserBalance, '/users/profile/balance')
 
 
 if __name__ == "__main__":
