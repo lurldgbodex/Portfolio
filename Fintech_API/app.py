@@ -5,40 +5,12 @@ import bcrypt
 from models import db, User, Loan, Repayment, Transaction
 from config import config_by_name
 from validate import validate_due_date, validate_loan_repay
+from datetime import datetime
+from uuid import uuid4
 
 app = Flask(__name__)
 api = Api(app)
 jwt = JWTManager(app)
-
-auth_parser = reqparse.RequestParser()
-
-auth_parser.add_argument('username', type=str, required=True,
-                         help="username is required and must be a string")
-auth_parser.add_argument('password', required=True,
-                         help='password is required and must be a string')
-
-user_parser = reqparse.RequestParser()
-user_parser.add_argument('first_name', default=None)
-user_parser.add_argument('email', default=None)
-user_parser.add_argument('last_name', default=None)
-user_parser.add_argument('phone_number', default=None)
-user_parser.add_argument('address', default=None)
-user_parser.add_argument('date_of_birth', default=None)
-
-loan_parser = reqparse.RequestParser()
-loan_parser.add_argument('amount', required=True, type=float,
-                         help='Please provide the loan amount you want')
-loan_parser.add_argument('due_date', type=int, default=30)
-
-loan_repay = reqparse.RequestParser()
-loan_repay.add_argument('type', type=validate_loan_repay, default='FULL')
-
-transaction_parser = reqparse.RequestParser()
-transaction_parser.add_argument('amount', type=float, required=True,
-                                help='Damn! provide the amount you want to send you dumb head')
-transaction_parser.add_argument(
-    'receiver', type=str, required=True, help='do i have to tell you to provide the reciever?')
-transaction_parser.add_argument('description', type=str, default=None)
 
 
 def create_app(config_name):
@@ -53,47 +25,82 @@ def create_app(config_name):
 
 class Register(Resource):
     def post(self):
+        auth_parser = reqparse.RequestParser()
+        auth_parser.add_argument('username', type=str, required=True,
+                                 help="username is required and must be a string")
+        auth_parser.add_argument('password', required=True,
+                                 help='password is required and must be a string')
+
+        user_parser = reqparse.RequestParser()
+        user_parser.add_argument('email', default=None)
+        user_parser.add_argument('first_name', default=None)
+        user_parser.add_argument('last_name', default=None)
+        user_parser.add_argument('phone_number', default=None)
+        user_parser.add_argument('address', default=None)
+        user_parser.add_argument('date_of_birth', type=str, default=None)
+
         args = auth_parser.parse_args()
         optional_args = user_parser.parse_args()
+
         username = args['username']
         password = args['password']
 
-        user = User.query.filter_by(username=username).first()
-        if user:
-            return {'error': 'User already exists'}, 400
+        try:
+            user = User.query.filter_by(username=username).first()
+            if user:
+                return {'error': 'User already exists'}, 400
 
-        hashed_password = bcrypt.hashpw(
-            password.encode('utf-8'), bcrypt.gensalt())
-        new_user = User(
-            username=username,
-            email=optional_args['email'],
-            password=hashed_password,
-            first_name=optional_args['first_name'],
-            last_name=optional_args['last_name'],
-            phone_number=optional_args['phone_number'],
-            address=optional_args['address'],
-            date_of_birth=optional_args['date_of_birth']
-        )
-        new_user.insert()
+            hashed_password = bcrypt.hashpw(
+                password.encode('utf-8'), bcrypt.gensalt())
 
-        return jsonify({
-            "success": True,
-            "message": "User created successfully"
-        })
+            date_of_birth_str = optional_args['date_of_birth']
+            date_of_birth = None
+            if date_of_birth_str:
+                date_of_birth = datetime.strptime(
+                    date_of_birth_str, '$Y-$M-$d')
+
+            new_user = User(
+                username=username,
+                email=optional_args['email'],
+                password=hashed_password,
+                first_name=optional_args['first_name'],
+                last_name=optional_args['last_name'],
+                phone_number=optional_args['phone_number'],
+                address=optional_args['address'],
+                date_of_birth=date_of_birth
+            )
+
+            new_user.insert()
+
+            return jsonify({
+                "success": True,
+                "message": "User created successfully"
+            })
+        except Exception as e:
+            return {'error': 'User registration failed', 'message': str(e)}, 500
 
 
 class Login(Resource):
     def post(self):
+        auth_parser = reqparse.RequestParser()
+        auth_parser.add_argument(
+            'username', type=str, required=True, help="Username is required and must be a string")
+        auth_parser.add_argument(
+            'password', required=True, help='Password is required and must be a string')
+
         args = auth_parser.parse_args()
         username = args['username']
         password = args['password']
 
-        user = User.query.filter_by(username=username).first()
-        if not user or not bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
-            return {'message': 'Invalid username or password'}, 401
+        try:
+            user = User.query.filter_by(username=username).first()
+            if not user or not bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+                return {'message': 'Invalid username or password'}, 401
 
-        access_token = create_access_token(identity=username)
-        return {'token': access_token}
+            access_token = create_access_token(identity=username)
+            return {'token': access_token}
+        except Exception as e:
+            return {'error': 'Login failed', 'message': str(e)}, 500
 
 
 class UserProfile(Resource):
@@ -114,11 +121,19 @@ class UserProfile(Resource):
             "date_of_birth": user.date_of_birth
         }
 
-        return user_data
+        return jsonify(user_data)
 
     @jwt_required()
     def put(self):
         current_user = get_jwt_identity()
+        user_parser = reqparse.RequestParser()
+        user_parser.add_argument('email', default=None)
+        user_parser.add_argument('first_name', default=None)
+        user_parser.add_argument('last_name', default=None)
+        user_parser.add_argument('phone_number', default=None)
+        user_parser.add_argument('address', default=None)
+        user_parser.add_argument('date_of_birth', type=str, default=None)
+
         args = user_parser.parse_args()
         user = User.query.filter_by(username=current_user).first_or_404()
 
@@ -131,27 +146,39 @@ class UserProfile(Resource):
         if not any(args.values()):
             abort(400, description="Please provide fields to update")
 
-        if args['email']:
-            user.email = args['email']
-        if args['first_name']:
-            user.first_name = args['first_name']
-        if args['last_name']:
-            user.last_name = args['last_name']
-        if args['phone_number']:
-            user.phone_number = args['phone_number']
-        if args['address']:
-            user.address = args['address']
+        try:
+            if args['date_of_birth']:
+                date_of_birth_str = args['date_of_birth']
+                date_of_birth = datetime.strptime(
+                    date_of_birth_str, '%Y-%m-%d')
+                user.date_of_birth = date_of_birth
 
-        user.update()
+            if args['email']:
+                user.email = args['email']
+            if args['first_name']:
+                user.first_name = args['first_name']
+            if args['last_name']:
+                user.last_name = args['last_name']
+            if args['phone_number']:
+                user.phone_number = args['phone_number']
+            if args['address']:
+                user.address = args['address']
 
-        return jsonify({
-            'message': 'User profile updated successfully'
-        })
+            user.update()
+
+            return jsonify({
+                'message': 'User profile updated successfully'
+            })
+        except ValueError as ve:
+            return {'error': 'User profile update failed', 'message': str(ve)}, 400
+        except Exception as e:
+            return {'error': 'User profile update failed', 'message': str(e)}, 500
 
     @jwt_required()
     def delete(self):
         current_user = get_jwt_identity()
         user = User.query.filter_by(username=current_user).first_or_404()
+
         loan = User.query.filter_by(user_id=user).first_or_404()
 
         if current_user != user.username:
@@ -171,6 +198,11 @@ class UserProfile(Resource):
 class LoanApplication(Resource):
     @jwt_required()
     def post(self):
+        loan_parser = reqparse.RequestParser()
+        loan_parser.add_argument('amount', required=True, type=float,
+                                 help='Please provide the loan amount you want')
+        loan_parser.add_argument('due_date', type=int, default=30)
+
         args = loan_parser.parse_args()
         current_user = get_jwt_identity()
         user = User.query.filter_by(username=current_user).first_or_404()
@@ -197,6 +229,35 @@ class LoanApplication(Resource):
             return jsonify({'error': str(e)}), 400
 
         return jsonify({'message': 'Loan application submitted successfully'})
+
+
+class LoansPending(Resource):
+    @jwt_required()
+    def get(self):
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(username=current_user).first_or_404()
+
+        if user.type != 'admin' and user.type != 'financial_officer':
+            print(user.type)
+            return {'message': 'Unauthorized to access this endpoint'}, 403
+
+        loans = Loan.query.filter((Loan.status == "pending") | (
+            Loan.status == "approved")).all()
+        if not loans:
+            return {'message': 'There is no loan pending for approval or disbursement'}
+        loan_data_list = []
+        for loan in loans:
+            interest = loan.amount - (loan.amount * loan.interest_rate)
+            loan_data = {
+                'loan_id': loan.id,
+                'loan_amount': loan.amount,
+                'loan_status': loan.status,
+                'interest': interest,
+                'Loan_date': loan.timestamp,
+            }
+            loan_data_list.append(loan_data)
+
+        return jsonify({'loans': loan_data_list})
 
 
 class LoanApproval(Resource):
@@ -246,6 +307,10 @@ class LoanDisbursement(Resource):
 class LoanRepayment(Resource):
     @jwt_required()
     def post(self, loan_id):
+        loan_repay = reqparse.RequestParser()
+        loan_repay.add_argument(
+            'type', type=validate_loan_repay, default='FULL')
+
         args = loan_repay.parse_args()
         current_user = get_jwt_identity()
         user = User.query.filter_by(username=current_user).first_or_404()
@@ -289,9 +354,7 @@ class LoanRepayment(Resource):
             }
 
         except Exception as e:
-            print(str(e))
-            db.session.rollback()
-            db.session.commit()
+            return {'error': 'Loan repayment failed', 'message': str(e)}, 500
 
 
 class LoanHistory(Resource):
@@ -302,6 +365,7 @@ class LoanHistory(Resource):
 
         loans_history = db.session.query(Loan, Repayment).join(
             Repayment).filter(Loan.user_id == user.id).all()
+        print(loans_history)
 
         loan_history_data = []
         for loan, repayment in loans_history:
@@ -324,6 +388,13 @@ class LoanHistory(Resource):
 class SendMoney(Resource):
     @jwt_required()
     def post(self):
+        transaction_parser = reqparse.RequestParser()
+        transaction_parser.add_argument('amount', type=float, required=True,
+                                        help='Damn! provide the amount you want to send you dumb head')
+        transaction_parser.add_argument(
+            'receiver', type=str, required=True, help='do i have to tell you to provide the reciever?')
+        transaction_parser.add_argument('description', type=str, default=None)
+
         args = transaction_parser.parse_args()
         receiver_username = args['receiver']
         transaction_amount = args['amount']
@@ -336,24 +407,37 @@ class SendMoney(Resource):
         if sender.balance < transaction_amount:
             return {'message': 'Don\'t be a thief, trying to send money you don\'t have'}, 400
 
-        transaction = Transaction(
-            sender=sender.id,
-            receiver=receiver.id,
-            amount=transaction_amount,
-            status='success',
-            description=description,
-            type='debit'
-        )
+        try:
+            transaction_id = uuid4()
+            sender.balance -= transaction_amount
+            sender_transaction = Transaction(
+                id=transaction_id,
+                sender=sender.id,
+                receiver=receiver.id,
+                amount=transaction_amount,
+                status='success',
+                description=description,
+                type='debit'
+            )
+            sender_transaction.insert()
+            sender.update()
 
-        transaction.insert()
+            receiver.balance += transaction_amount
+            receiver_transaction = Transaction(
+                id=transaction_id,
+                sender=sender.id,
+                receiver=receiver.id,
+                amount=transaction_amount,
+                status='success',
+                description=description,
+                type='credit'
+            )
+            receiver_transaction.insert()
+            receiver.update()
 
-        sender.balance -= transaction_amount
-        receiver.balance += transaction_amount
-        # receiver.type = 'credit'
-        sender.update()
-        receiver.update()
-
-        return {'message': 'Money sent successfully'}
+            return {'message': 'Money sent successfully'}
+        except Exception as e:
+            return {'error': 'Transaction failed', 'message': str(e)}, 400
 
 
 class TransactionnHistory(Resource):
@@ -392,7 +476,9 @@ api.add_resource(Register, '/users/register')
 api.add_resource(Login, '/users/login')
 api.add_resource(UserProfile, '/users/profile')
 api.add_resource(LoanApplication, '/loans/application')
-api.add_resource(LoanApproval, '/loans/approval/<int:loan_id>')
+api.add_resource(LoansPending, '/loans/applications/pending')
+api.add_resource(
+    LoanApproval, '/loans/approval/<int:loan_id>')
 api.add_resource(LoanDisbursement, '/loans/disbursement/<int:loan_id>')
 api.add_resource(LoanRepayment, '/loans/repayment/<int:loan_id>')
 api.add_resource(LoanHistory, '/loans/history')

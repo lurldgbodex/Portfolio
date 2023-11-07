@@ -35,8 +35,10 @@ class User(db.Model, DbMethods):
                                       'user',), default='user')
     loans = db.relationship(
         'Loan', backref='user', lazy=True)
-    transactions = db.relationship(
-        'Transaction', primaryjoin='or_(User.id == Transaction.sender_id, User.id == Transaction.receiver_id)', backref='user', lazy=True)
+    sent_transactions = db.relationship(
+        'Transaction', back_populates='sender', foreign_keys='Transaction.sender_id')
+    received_transactions = db.relationship(
+        'Transaction', back_populates='receiver', foreign_keys='Transaction.receiver_id')
     payments = db.relationship(
         'Payment', backref='user', lazy=True)
     repayments = db.relationship('Repayment', backref='user', lazy=True)
@@ -116,10 +118,13 @@ class Transaction(db.Model, DbMethods):
     receiver_id = db.Column(
         db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    sender = db.relationship('User', foreign_keys=[sender_id])
-    receiver = db.relationship('User', foreign_keys=[receiver_id])
+    sender = db.relationship('User', foreign_keys=[
+                             sender_id], back_populates='sent_transactions')
+    receiver = db.relationship('User', foreign_keys=[
+                               receiver_id], back_populates='sent_transactions')
 
-    def __init__(self, amount, sender, receiver, type, description=None, status='success'):
+    def __init__(self, id, amount, sender, receiver, type, description=None, status='success'):
+        self.id = id,
         self.amount = amount
         self.transaction_type = type
         self.sender_id = sender
