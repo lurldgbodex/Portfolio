@@ -7,6 +7,7 @@ from config import config_by_name
 from validate import validate_due_date, validate_loan_repay
 from datetime import datetime
 from uuid import uuid4
+from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
 api = Api(app)
@@ -57,7 +58,7 @@ class Register(Resource):
             date_of_birth = None
             if date_of_birth_str:
                 date_of_birth = datetime.strptime(
-                    date_of_birth_str, '$Y-$M-$d')
+                    date_of_birth_str, '%Y-%m-%d')
 
             new_user = User(
                 username=username,
@@ -76,6 +77,9 @@ class Register(Resource):
                 "success": True,
                 "message": "User created successfully"
             })
+        except IntegrityError as ie:
+            if '1062' in str(ie.orig):
+                return {'error': 'User registration failed', 'message': str(ie.orig)}, 500
         except Exception as e:
             return {'error': 'User registration failed', 'message': str(e)}, 500
 
@@ -140,9 +144,6 @@ class UserProfile(Resource):
         if current_user != user.username:
             abort(403, description='Unauthorized')
 
-        if 'username' in args or 'password' in args:
-            abort(400, description='can\'t update username or password')
-
         if not any(args.values()):
             abort(400, description="Please provide fields to update")
 
@@ -195,6 +196,14 @@ class UserProfile(Resource):
         return jsonify({"message": "User account deleted successfully"})
 
 
+class UserBalance(Resource):
+    @jwt_required()
+    def get(self):
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(username=current_user).first_or_404()
+        return {'balance': user.balance}
+
+
 class LoanApplication(Resource):
     @jwt_required()
     def post(self):
@@ -238,7 +247,6 @@ class LoansPending(Resource):
         user = User.query.filter_by(username=current_user).first_or_404()
 
         if user.type != 'admin' and user.type != 'financial_officer':
-            print(user.type)
             return {'message': 'Unauthorized to access this endpoint'}, 403
 
         loans = Loan.query.filter((Loan.status == "pending") | (
@@ -408,32 +416,18 @@ class SendMoney(Resource):
             return {'message': 'Don\'t be a thief, trying to send money you don\'t have'}, 400
 
         try:
-            transaction_id = uuid4()
+            transaction_id = str(uuid4())
             sender.balance -= transaction_amount
-            sender_transaction = Transaction(
+            transaction = Transaction(
                 id=transaction_id,
                 sender=sender.id,
                 receiver=receiver.id,
                 amount=transaction_amount,
                 status='success',
                 description=description,
-                type='debit'
             )
-            sender_transaction.insert()
+            transaction.insert()
             sender.update()
-
-            receiver.balance += transaction_amount
-            receiver_transaction = Transaction(
-                id=transaction_id,
-                sender=sender.id,
-                receiver=receiver.id,
-                amount=transaction_amount,
-                status='success',
-                description=description,
-                type='credit'
-            )
-            receiver_transaction.insert()
-            receiver.update()
 
             return {'message': 'Money sent successfully'}
         except Exception as e:
@@ -451,36 +445,35 @@ class TransactionnHistory(Resource):
                 Transaction.receiver_id == user.id)
         ).all()
         transaction_history = []
+        transaction_type = ''
         for transaction in transactions:
+            if transaction.sender == current_user:
+                transaction_type = 'debit'
+            else:
+                transaction_type = 'credit'
+
             transaction_data = {
                 'id': transaction.id,
                 'sender': transaction.sender.username,
                 'receiver': transaction.receiver.username,
                 'amount': transaction.amount,
                 'status': transaction.status,
+                'type': transaction_type,
                 'timestamp': transaction.timestamp
             }
             transaction_history.append(transaction_data)
         return jsonify({'transactions': transaction_history})
 
 
-class UserBalance(Resource):
-    @jwt_required()
-    def get(self):
-        current_user = get_jwt_identity()
-        user = User.query.filter_by(username=current_user).first_or_404()
-        return {'balance': user.balance}
-
-
 api.add_resource(Register, '/users/register')
 api.add_resource(Login, '/users/login')
 api.add_resource(UserProfile, '/users/profile')
-api.add_resource(LoanApplication, '/loans/application')
+api.add_resource(LoanApplication, '/loans/apply')
 api.add_resource(LoansPending, '/loans/applications/pending')
 api.add_resource(
-    LoanApproval, '/loans/approval/<int:loan_id>')
-api.add_resource(LoanDisbursement, '/loans/disbursement/<int:loan_id>')
-api.add_resource(LoanRepayment, '/loans/repayment/<int:loan_id>')
+    LoanApproval, '/loans/approve/<int:loan_id>')
+api.add_resource(LoanDisbursement, '/loans/disburse/<int:loan_id>')
+api.add_resource(LoanRepayment, '/loans/repay/<int:loan_id>')
 api.add_resource(LoanHistory, '/loans/history')
 api.add_resource(SendMoney, '/transactions/send')
 api.add_resource(TransactionnHistory, '/transactions/history')

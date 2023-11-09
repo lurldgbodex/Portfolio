@@ -1,0 +1,35 @@
+version: '3'
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: MYSQL_DATABASE
+      MYSQL_USER: MYSQL_USER
+      MYSQL_PASSWORD: MYSQL_PASSWORD
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/mysql.conf.d/my.cnf
+    ports:
+      - "3306:3306" 
+    networks:
+      - fintech-network  # Connect the 'db' service to the custom network
+
+  web:
+    build: .
+    command: python app.py
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    networks:
+      - fintech-network  # Connect the 'web' service to the custom network
+
+networks:
+  fintech-network:  # Define a custom network for the services
+    driver: bridge  # You can specify a different driver if needed
+
+volumes:
+  mysql-data:

@@ -8,8 +8,8 @@ __pycache__/
 *.pyd
 .vscode/
 
-Dockerfile
-docker-compose.yml
+# Dockerfile
+# docker-compose.yml
 
 .dockerignore
 .docker

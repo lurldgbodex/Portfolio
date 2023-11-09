@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
+
 db = SQLAlchemy()
 
 
@@ -39,8 +40,6 @@ class User(db.Model, DbMethods):
         'Transaction', back_populates='sender', foreign_keys='Transaction.sender_id')
     received_transactions = db.relationship(
         'Transaction', back_populates='receiver', foreign_keys='Transaction.receiver_id')
-    payments = db.relationship(
-        'Payment', backref='user', lazy=True)
     repayments = db.relationship('Repayment', backref='user', lazy=True)
 
     def __init__(self, username, password, email=None, first_name=None, last_name=None, phone_number=None, address=None, date_of_birth=None):
@@ -105,9 +104,7 @@ class Repayment(db.Model, DbMethods):
 class Transaction(db.Model, DbMethods):
     __tablename__ = 'transactions'
 
-    id = db.Column(db.Integer, primary_key=True)
-    transaction_type = db.Column(
-        db.Enum('credit', 'debit'), nullable=False)
+    id = db.Column(db.String(225), primary_key=True)
     amount = db.Column(db.Float, nullable=False)
     status = db.Column(db.Enum('success', 'failed',
                        'reversed'), nullable=False)
@@ -123,28 +120,10 @@ class Transaction(db.Model, DbMethods):
     receiver = db.relationship('User', foreign_keys=[
                                receiver_id], back_populates='sent_transactions')
 
-    def __init__(self, id, amount, sender, receiver, type, description=None, status='success'):
-        self.id = id,
+    def __init__(self, id, amount, sender, receiver, description=None, status='success'):
+        self.id = id
         self.amount = amount
-        self.transaction_type = type
         self.sender_id = sender
         self.receiver_id = receiver
         self.description = description
         self.status = status
-
-
-# Define the Payment model
-class Payment(db.Model, DbMethods):
-    __tablename__ = 'payments'
-
-    id = db.Column(db.Integer, primary_key=True)
-    payee_name = db.Column(db.Integer, nullable=False)
-    payment_type = db.Column(db.Enum('Online', 'Utility'), nullable=False)
-    amount = db.Column(db.Float, nullable=False)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-
-    def __init__(self, amount, payee, type):
-        self.amount = amount
-        self.payee_name = payee
-        self.payment_type = type
