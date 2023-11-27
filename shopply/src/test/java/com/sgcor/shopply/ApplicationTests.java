@@ -1,10 +1,10 @@
-package com.sgcor;
+package com.sgcor.shopply;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ShopplyApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {

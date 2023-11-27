@@ -1,4 +1,4 @@
-package com.sgcor;
+package com.sgcor.shopply;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -24,7 +24,7 @@ public class TestShopplyApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.from(ShopplyApplication::main).with(TestShopplyApplication.class).run(args);
+		SpringApplication.from(Application::main).with(TestShopplyApplication.class).run(args);
 	}
 
 }
