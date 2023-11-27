@@ -4,7 +4,6 @@ import com.sgcor.shopply.shared.ErrorResponse;
 import com.sgcor.shopply.shared.GenericResponse;
 import com.sgcor.shopply.shared.exceptions.BadRequestException;
 import com.sgcor.shopply.shared.exceptions.UnauthorizedException;
-import com.sgcor.shopply.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
