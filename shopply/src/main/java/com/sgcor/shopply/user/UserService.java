@@ -1,26 +1,36 @@
 package com.sgcor.shopply.user;
 
 import com.sgcor.shopply.shared.GenericResponse;
+import com.sgcor.shopply.shared.SharedService;
 import com.sgcor.shopply.shared.exceptions.BadRequestException;
+import com.sgcor.shopply.shared.exceptions.UnauthorizedException;
+import com.sgcor.shopply.user.auth.PasswordChangeRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
+    private static final Pattern EMAIL_PATTERN = Pattern.compile(
+            "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$", Pattern.CASE_INSENSITIVE
+    );
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final SharedService sharedService;
 
-    public UserDetails loadUserByUsername(String username){
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         "User not found with username: " + username)
@@ -30,33 +40,31 @@ public class UserService implements UserDetailsService {
         userRepository.save(newUser);
     }
 
-    public String findCurrentUser() throws Exception {
+    public String findCurrentUser() throws UnauthorizedException {
        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
        if (authentication.isAuthenticated()) {
             return authentication.getName();
        } else {
-           throw new Exception("no current user");
+           throw new UnauthorizedException("no current user");
        }
     }
 
     public boolean isValidEmail(String email) {
-        return email != null && email.contains("@") && email.contains(".");
+        return email != null && !email.isEmpty() && EMAIL_PATTERN.matcher(email).matches();
     }
 
-    public GenericResponse updateUser(UserDetailDTO request) {
+    public GenericResponse updateUser(UserDetailDTO request) throws BadRequestException, UnauthorizedException {
         try {
             User user = (User) loadUserByUsername(findCurrentUser());
-            System.out.println(user);
 
             if (request.getEmail() != null) {
+                if (!isValidEmail(request.getEmail())) {
+                    throw new BadRequestException("Please provide a valid email");
+                }
                 if (userRepository.findByEmail(request.getEmail()) != null){
-                    throw new RuntimeException("User with email already exists");
+                    throw new BadRequestException("User with email already exists");
                 }
-                if (isValidEmail(request.getEmail())) {
-                    user.setEmail(request.getEmail());
-                } else {
-                    throw new RuntimeException("Please provide a valid email");
-                }
+                user.setEmail(request.getEmail());
             }
 
             if (request.getDateOfBirth() != null) {
@@ -66,7 +74,7 @@ public class UserService implements UserDetailsService {
                     LocalDate dob = LocalDate.parse(date, dobFormatter);
                     user.setDateOfBirth(dob);
                 } catch (Exception e) {
-                    throw new RuntimeException("Invalid date format: " + "yyyy-mm-dd");
+                    throw new BadRequestException("Invalid date format: " + "yyyy-mm-dd");
                 }
             }
 
@@ -78,8 +86,8 @@ public class UserService implements UserDetailsService {
             save(user);
             return new GenericResponse("User updated successfully");
 
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+        } catch (UsernameNotFoundException une) {
+            throw new UnauthorizedException(une.getMessage());
         }
     }
 
@@ -107,5 +115,28 @@ public class UserService implements UserDetailsService {
         save(user);
 
         return new GenericResponse("User confirmed successfully");
+    }
+
+    public GenericResponse changePassword(PasswordChangeRequest request) throws BadRequestException {
+        try {
+            if (request.getNewPassword() == null || request.getCurrentPassword() == null || request.getConfirmPassword() == null) {
+                throw new BadRequestException("You need to provide your current password and new password");
+            }
+            User user = (User) loadUserByUsername(findCurrentUser());
+            if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())){
+                throw new IllegalStateException("Wrong password");
+            }
+            if (sharedService.isNotValidPassword(request.getNewPassword())) {
+                throw new IllegalStateException("password must be minimum 6 characters, with an uppercase, lowercase and special character");
+            }
+            if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+                throw new IllegalStateException("Password do not match");
+            }
+            user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            save(user);
+            return new GenericResponse("password updated successfully");
+        } catch (UsernameNotFoundException | UnauthorizedException unf) {
+            throw new IllegalStateException(unf.getMessage());
+        }
     }
 }

@@ -2,6 +2,8 @@ package com.sgcor.shopply.user;
 
 import com.sgcor.shopply.shared.GenericResponse;
 import com.sgcor.shopply.shared.exceptions.BadRequestException;
+import com.sgcor.shopply.shared.exceptions.UnauthorizedException;
+import com.sgcor.shopply.user.auth.PasswordChangeRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +18,17 @@ public class UserController {
     public ResponseEntity<GenericResponse> updateUser(@RequestBody UserDetailDTO request) {
         try {
             return ResponseEntity.ok(userService.updateUser(request));
-        } catch (RuntimeException re) {
+        } catch (UnauthorizedException re) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
                     .body(new GenericResponse(re.getMessage()));
+        } catch (BadRequestException bre) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new GenericResponse(bre.getMessage()));
         }
     }
+
     @GetMapping("/profile")
     public ResponseEntity<?> getProfile() {
         try {
@@ -29,7 +36,7 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.
                     status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
+                    .body(new GenericResponse(e.getMessage()));
         }
     }
 
@@ -39,6 +46,17 @@ public class UserController {
             return ResponseEntity.ok(userService.confirmUserEmail(confirmationToken));
         } catch (BadRequestException bre) {
             return ResponseEntity.badRequest().body(new GenericResponse(bre.getMessage()));
+        }
+    }
+
+    @PatchMapping("/change-password")
+    public ResponseEntity<GenericResponse> updatePassword(@RequestBody PasswordChangeRequest request) {
+        try{
+            return ResponseEntity.ok(userService.changePassword(request));
+        } catch (IllegalStateException | BadRequestException ise) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new GenericResponse(ise.getMessage()));
         }
     }
 }

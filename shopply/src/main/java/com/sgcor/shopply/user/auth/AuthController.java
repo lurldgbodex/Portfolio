@@ -1,6 +1,5 @@
 package com.sgcor.shopply.user.auth;
 
-import com.sgcor.shopply.shared.ErrorResponse;
 import com.sgcor.shopply.shared.GenericResponse;
 import com.sgcor.shopply.shared.exceptions.BadRequestException;
 import com.sgcor.shopply.shared.exceptions.UnauthorizedException;
@@ -20,11 +19,12 @@ public class AuthController {
         try {
 
             return ResponseEntity
-                    .ok(new AuthResponse(authService.registerUser(authDTO)));
-        } catch (Exception e) {
+                    .status(HttpStatus.CREATED)
+                    .body(new AuthResponse(authService.registerUser(authDTO)));
+        } catch (BadRequestException e) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorResponse(e.getMessage()));
+                    .body(new GenericResponse(e.getMessage()));
         }
     }
 
@@ -36,29 +36,16 @@ public class AuthController {
         } catch (BadRequestException bre) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorResponse(bre.getMessage()));
+                    .body(new GenericResponse(bre.getMessage()));
         } catch (UsernameNotFoundException unf) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(new ErrorResponse(unf.getMessage()));
+                    .body(new GenericResponse(unf.getMessage()));
         } catch (UnauthorizedException uae) {
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
-                    .body(new ErrorResponse(uae.getMessage()));
+                    .body(new GenericResponse(uae.getMessage()));
         }
-    }
-
-    @PatchMapping("/change-password")
-    public ResponseEntity<GenericResponse> updatePassword(@RequestBody PasswordChangeRequest request) {
-        try{
-            authService.changePassword(request);
-            return ResponseEntity.ok(new GenericResponse("password updated successfully"));
-        } catch (IllegalStateException ise) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(new GenericResponse(ise.getMessage()));
-        }
-
     }
 }
 
