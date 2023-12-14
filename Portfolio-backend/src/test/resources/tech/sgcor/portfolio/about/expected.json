@@ -1,0 +1,14 @@
+{
+  "id": 10,
+  "name": "Segun Clement",
+  "title": "Software Engineer",
+  "address": "Von Garden city",
+  "email": "gbodisegun@gmail.com",
+  "dob": "2023-12-12",
+  "phoneNumber": "+2349153461938",
+  "summary": "A proficient software engineer",
+  "socials": {
+    "github": "github-url",
+    "linkedin": "linkedin-profile"
+  }
+}
