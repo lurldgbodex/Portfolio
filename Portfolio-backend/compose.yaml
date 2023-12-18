@@ -1,0 +1,10 @@
+services:
+  mysql:
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=portfolio_db'
+      - 'MYSQL_PASSWORD=portfolio-pass'
+      - 'MYSQL_ROOT_PASSWORD=root-pass'
+      - 'MYSQL_USER=seguser'
+    ports:
+      - '3306:3306'

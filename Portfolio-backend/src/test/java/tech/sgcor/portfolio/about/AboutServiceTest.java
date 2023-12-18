@@ -1,5 +1,6 @@
 package tech.sgcor.portfolio.about;
 
+import org.apache.coyote.BadRequestException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -66,24 +67,25 @@ class AboutServiceTest {
         request.setAddress("test-address");
         request.setPhone_number("+2340011223344");
 
-        var res = underTest.add(request);
-
         var about = new About();
         about.setName(request.getName());
         about.setTitle(request.getTitle());
         about.setAddress(request.getAddress());
         about.setPhoneNumber(request.getPhone_number());
 
+        given(underTest.add(request)).willReturn(about);
+
+        var res = underTest.add(request);
+
+
         verify(aboutRepository, times(1)).save(about);
 
-        assertThat(res).isInstanceOf(CustomResponse.class);
-        assertThat(res.code()).isEqualTo(201);
-        assertThat(res.message()).isEqualTo("about added successfully");
-        assertThat(res.status()).isEqualTo(HttpStatus.CREATED);
+        assertThat(res).isInstanceOf(About.class);
+        assertThat(res).hasFieldOrPropertyWithValue("name", about.getName());
     }
 
     @Test
-    void updateSuccessTest() throws ResourceNotFound {
+    void updateSuccessTest() throws ResourceNotFound, BadRequestException {
         Long id = 10L;
         var about = new About();
 

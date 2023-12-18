@@ -1,16 +1,24 @@
 package tech.sgcor.portfolio.about;
 
+import io.micrometer.common.util.StringUtils;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.function.BiPredicate;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
+@Validated
 public class AboutService {
     private final AboutRepository aboutRepository;
 
@@ -37,7 +45,7 @@ public class AboutService {
         );
     }
 
-    public CustomResponse add(CreateRequest request) {
+    public About add(@Valid CreateRequest request) {
         var about = About.builder()
                 .name(request.getName())
                 .email(request.getEmail())
@@ -51,38 +59,55 @@ public class AboutService {
                 .medium(request.getMedium())
                 .build();
 
-        aboutRepository.save(about);
+        return aboutRepository.save(about);
 
-        return new CustomResponse(
-                HttpStatus.CREATED.value(),
-                "about added successfully",
-                HttpStatus.CREATED
-        );
     }
 
-    public CustomResponse update(Long id, UpdateRequest request) throws ResourceNotFound {
+    public CustomResponse update(
+            Long id, @Valid UpdateRequest request) throws ResourceNotFound, BadRequestException {
         var about = aboutRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFound("Data not found with id " + id)
                 );
+        if (request == null) {
+            throw new BadRequestException("you need to provide the field(s) you want to update");
+        }
 
-        about.setName(request.getName() != null ? request.getName() : about.getName());
-        about.setTitle(request.getTitle() != null ? request.getTitle() : about.getTitle());
-        about.setPhoneNumber(request.getPhone_number() != null ? request.getPhone_number() : about.getPhoneNumber());
-        about.setDob(request.getDob() != null ? request.getDob() : about.getDob());
-        about.setAddress(request.getAddress() != null ? request.getAddress() : about.getAddress());
-        about.setEmail(request.getEmail() != null ? request.getEmail() : about.getEmail());
-        about.setSummary(request.getSummary() != null ? request.getSummary() : about.getSummary());
-        about.setGithub(request.getGithub() != null ? request.getGithub() : about.getGithub());
-        about.setLinkedin(request.getLinkedin() != null ? request.getLinkedin() : about.getLinkedin());
-        about.setMedium(request.getMedium() != null ? request.getMedium() : about.getMedium());
+        boolean allFieldsBlank = Stream.of(
+                Objects.toString(request.getName(), ""),
+                Objects.toString(request.getTitle(), ""),
+                Objects.toString(request.getPhone_number(), ""),
+                Objects.toString(request.getDob(), ""),
+                Objects.toString(request.getAddress(), ""),
+                Objects.toString(request.getEmail(), ""),
+                Objects.toString(request.getSummary(), ""),
+                Objects.toString(request.getGithub(), ""),
+                Objects.toString(request.getLinkedin(), ""),
+                Objects.toString(request.getMedium(), "")
+        ).allMatch(StringUtils::isBlank);
 
-         aboutRepository.save(about);
-         return new CustomResponse(
-                 HttpStatus.OK.value(),
-                 "update successful",
-                 HttpStatus.OK
-         );
+        if (allFieldsBlank) {
+            throw new BadRequestException("At least one field must be non-blank to perform the update");
+        }
 
+
+        about.setName(isNotBlank(request.getName()) ? request.getName() : about.getName());
+        about.setTitle(isNotBlank(request.getTitle()) ? request.getTitle() : about.getTitle());
+        about.setPhoneNumber(isNotBlank(request.getPhone_number()) ? request.getPhone_number() : about.getPhoneNumber());
+        about.setDob((request.getDob() != null) ? request.getDob() : about.getDob());
+        about.setAddress(isNotBlank(request.getAddress()) ? request.getAddress() : about.getAddress());
+        about.setEmail(isNotBlank(request.getEmail()) ? request.getEmail() : about.getEmail());
+        about.setSummary(isNotBlank(request.getSummary()) ? request.getSummary() : about.getSummary());
+        about.setGithub(isNotBlank(request.getGithub()) ? request.getGithub() : about.getGithub());
+        about.setLinkedin(isNotBlank(request.getLinkedin()) ? request.getLinkedin() : about.getLinkedin());
+        about.setMedium(isNotBlank(request.getMedium()) ? request.getMedium() : about.getMedium());
+
+         About status = aboutRepository.save(about);
+
+        return new CustomResponse(
+                         HttpStatus.OK.value(),
+                         "update successful",
+                         HttpStatus.OK
+                 );
     }
 
     public CustomResponse delete(Long id) throws ResourceNotFound {
@@ -95,5 +120,9 @@ public class AboutService {
                 "about successfully deleted with id " + id,
                 HttpStatus.OK
         );
+    }
+
+    public boolean isNotBlank(String value) {
+        return value != null && !value.trim().isEmpty();
     }
 }

@@ -68,7 +68,7 @@ class AboutControllerTest {
         req.setName("create about test");
 
 
-        var res = new CustomResponse(HttpStatus.CREATED.value(), "created", HttpStatus.CREATED);
+        var res = new About();
 
         given(underTest.add(req)).willReturn(res);
 
@@ -76,9 +76,7 @@ class AboutControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(req)))
-                .andExpect(status().isCreated())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message").value(res.message()));
+                .andExpect(status().isCreated());
     }
 
     @Test
