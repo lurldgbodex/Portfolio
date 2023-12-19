@@ -122,7 +122,7 @@ public class AboutService {
         );
     }
 
-    public boolean isNotBlank(String value) {
+    public static boolean isNotBlank(String value) {
         return value != null && !value.trim().isEmpty();
     }
 }

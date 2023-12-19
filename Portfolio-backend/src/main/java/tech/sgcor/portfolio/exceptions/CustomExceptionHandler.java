@@ -44,7 +44,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
                    violation.getPropertyPath().spliterator(), false)
                    .map(Path.Node::getName)
                    .collect(Collectors.joining("."));
-           String errorMessage = fieldName.replace("[a-zA-Z]+\\.request\\.", "") + ": " + violation.getMessage();
+           String errorMessage = fieldName.replaceAll("[a-zA-Z]+\\.request\\.", "") + ": " + violation.getMessage();
            errors.add(errorMessage);
        }
        var apiError = new ValidationError(
