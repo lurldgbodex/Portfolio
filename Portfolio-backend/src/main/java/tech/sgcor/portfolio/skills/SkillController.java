@@ -34,10 +34,16 @@ public class SkillController {
         return ResponseEntity.created(location).body(res);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<CustomResponse> updateSkill(@PathVariable long id,
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomResponse> updateSkills(@PathVariable long id,
             @RequestBody SkillUpdateRequest request) throws ResourceNotFound, BadRequestException {
         return ResponseEntity.ok(service.updateSkill(request, id));
+    }
+
+    @PatchMapping("/{id}/update-skill")
+    public ResponseEntity<CustomResponse> update(
+            @PathVariable long id, @RequestBody UpdateSkill request) throws ResourceNotFound, BadRequestException {
+        return ResponseEntity.ok(service.updateSpecificSkill(id, request));
     }
 
     @DeleteMapping("/{id}")

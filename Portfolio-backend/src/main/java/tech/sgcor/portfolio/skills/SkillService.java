@@ -46,6 +46,18 @@ public class SkillService {
         return new GetSkill(skill);
     }
 
+    public CustomResponse updateSpecificSkill(
+            long id, @Valid UpdateSkill request) throws ResourceNotFound {
+
+        var skill = skillRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFound("Resource not found with id"));
+
+        skill.setName(request.getSkill());
+        skillRepository.save(skill);
+
+        return new CustomResponse(200, "Skill updated successfully", HttpStatus.OK);
+    }
+
     @Transactional
     public CustomResponse updateSkill(
             SkillUpdateRequest request, long id) throws ResourceNotFound, BadRequestException {
