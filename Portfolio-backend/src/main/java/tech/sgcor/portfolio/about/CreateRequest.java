@@ -5,8 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
-import tech.sgcor.portfolio.shared.ValidLocalDate;
+import tech.sgcor.portfolio.validation.ValidLocalDate;
 
 
 import java.time.LocalDate;

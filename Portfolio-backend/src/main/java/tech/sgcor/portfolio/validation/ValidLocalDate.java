@@ -1,4 +1,4 @@
-package tech.sgcor.portfolio.shared;
+package tech.sgcor.portfolio.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

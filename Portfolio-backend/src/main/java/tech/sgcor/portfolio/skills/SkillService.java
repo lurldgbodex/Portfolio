@@ -8,9 +8,9 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import tech.sgcor.portfolio.about.AboutService;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
+import tech.sgcor.portfolio.shared.SharedService;
 
 import java.util.List;
 import java.util.Objects;
@@ -73,7 +73,7 @@ public class SkillService {
             throw new BadRequestException("you need to provide a field to update");
         }
 
-        updateSkillType.setName(AboutService.isNotBlank(request.getName()) ? request.getName() : updateSkillType.getName());
+        updateSkillType.setName(SharedService.isNotBlank(request.getName()) ? request.getName() : updateSkillType.getName());
         skillTypeRepository.save(updateSkillType);
 
         List<Skill> skills = updateSkillType.getSkills();
@@ -84,7 +84,7 @@ public class SkillService {
             for (int i = 0; i < noOfSkills; i++) {
                 Skill skill = skills.get(i);
                 String newSkillName = request.getSkill().get(i);
-                skill.setName(AboutService.isNotBlank(newSkillName) ? newSkillName : skill.getName());
+                skill.setName(SharedService.isNotBlank(newSkillName) ? newSkillName : skill.getName());
             }
             skillRepository.saveAll(skills);
         }
