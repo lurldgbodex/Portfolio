@@ -7,9 +7,9 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import tech.sgcor.portfolio.about.AboutService;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
+import tech.sgcor.portfolio.shared.SharedService;
 
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -70,13 +70,13 @@ public class EducationService {
             throw new BadRequestException("At least one field must not be blank to perform update");
         }
 
-        education.setSchool(AboutService.isNotBlank(request.getSchool()) ? request.getSchool() : education.getSchool());
-        education.setDegree(AboutService.isNotBlank(request.getDegree()) ? request.getDegree() : education.getDegree());
-        education.setGrade(AboutService.isNotBlank(request.getGrade()) ? request.getGrade() : education.getGrade());
-        education.setDescription(AboutService.isNotBlank(request.getDescription()) ? request.getDescription() : education.getDescription());
+        education.setSchool(SharedService.isNotBlank(request.getSchool()) ? request.getSchool() : education.getSchool());
+        education.setDegree(SharedService.isNotBlank(request.getDegree()) ? request.getDegree() : education.getDegree());
+        education.setGrade(SharedService.isNotBlank(request.getGrade()) ? request.getGrade() : education.getGrade());
+        education.setDescription(SharedService.isNotBlank(request.getDescription()) ? request.getDescription() : education.getDescription());
         education.setStartDate(request.getStart_date() != null ? request.getStart_date() : education.getStartDate());
         education.setEndDate(request.getEnd_date() != null ? request.getEnd_date() : education.getEndDate());
-        education.setCourse(AboutService.isNotBlank(request.getCourse()) ? request.getCourse() : education.getCourse());
+        education.setCourse(SharedService.isNotBlank(request.getCourse()) ? request.getCourse() : education.getCourse());
 
         return repository.save(education);
     }

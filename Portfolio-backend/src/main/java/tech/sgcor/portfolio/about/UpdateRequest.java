@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email;
 
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import tech.sgcor.portfolio.shared.ValidLocalDate;
+import tech.sgcor.portfolio.validation.ValidLocalDate;
 
 import java.time.LocalDate;
 

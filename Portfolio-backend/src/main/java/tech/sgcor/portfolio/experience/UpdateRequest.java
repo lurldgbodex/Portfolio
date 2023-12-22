@@ -1,7 +1,7 @@
 package tech.sgcor.portfolio.experience;
 
 import lombok.Data;
-import tech.sgcor.portfolio.shared.ValidLocalDate;
+import tech.sgcor.portfolio.validation.ValidLocalDate;
 
 import java.time.LocalDate;
 

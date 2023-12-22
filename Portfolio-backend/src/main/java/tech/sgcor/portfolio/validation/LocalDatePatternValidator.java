@@ -1,4 +1,4 @@
-package tech.sgcor.portfolio.shared;
+package tech.sgcor.portfolio.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

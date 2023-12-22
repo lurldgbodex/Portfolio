@@ -7,9 +7,9 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import tech.sgcor.portfolio.about.AboutService;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
+import tech.sgcor.portfolio.shared.SharedService;
 
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -64,9 +64,9 @@ public class ExperienceService {
             throw new BadRequestException("At least one field must be non-blank to perform the update");
         }
 
-        experience.setCompany(AboutService.isNotBlank(request.getCompany()) ? request.getCompany() : experience.getCompany());
-        experience.setRole(AboutService.isNotBlank(request.getRole()) ? request.getRole() : experience.getRole());
-        experience.setDescription(AboutService.isNotBlank(request.getDescription()) ? request.getDescription() : experience.getDescription());
+        experience.setCompany(SharedService.isNotBlank(request.getCompany()) ? request.getCompany() : experience.getCompany());
+        experience.setRole(SharedService.isNotBlank(request.getRole()) ? request.getRole() : experience.getRole());
+        experience.setDescription(SharedService.isNotBlank(request.getDescription()) ? request.getDescription() : experience.getDescription());
         experience.setStartDate(request.getStart_date() != null ? request.getStart_date() : experience.getStartDate());
         experience.setEndDate(request.getEnd_date() != null ? request.getEnd_date() : experience.getEndDate());
 

@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
+import tech.sgcor.portfolio.shared.SharedService;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.BiPredicate;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
@@ -90,16 +90,16 @@ public class AboutService {
         }
 
 
-        about.setName(isNotBlank(request.getName()) ? request.getName() : about.getName());
-        about.setTitle(isNotBlank(request.getTitle()) ? request.getTitle() : about.getTitle());
-        about.setPhoneNumber(isNotBlank(request.getPhone_number()) ? request.getPhone_number() : about.getPhoneNumber());
+        about.setName(SharedService.isNotBlank(request.getName()) ? request.getName() : about.getName());
+        about.setTitle(SharedService.isNotBlank(request.getTitle()) ? request.getTitle() : about.getTitle());
+        about.setPhoneNumber(SharedService.isNotBlank(request.getPhone_number()) ? request.getPhone_number() : about.getPhoneNumber());
         about.setDob((request.getDob() != null) ? request.getDob() : about.getDob());
-        about.setAddress(isNotBlank(request.getAddress()) ? request.getAddress() : about.getAddress());
-        about.setEmail(isNotBlank(request.getEmail()) ? request.getEmail() : about.getEmail());
-        about.setSummary(isNotBlank(request.getSummary()) ? request.getSummary() : about.getSummary());
-        about.setGithub(isNotBlank(request.getGithub()) ? request.getGithub() : about.getGithub());
-        about.setLinkedin(isNotBlank(request.getLinkedin()) ? request.getLinkedin() : about.getLinkedin());
-        about.setMedium(isNotBlank(request.getMedium()) ? request.getMedium() : about.getMedium());
+        about.setAddress(SharedService.isNotBlank(request.getAddress()) ? request.getAddress() : about.getAddress());
+        about.setEmail(SharedService.isNotBlank(request.getEmail()) ? request.getEmail() : about.getEmail());
+        about.setSummary(SharedService.isNotBlank(request.getSummary()) ? request.getSummary() : about.getSummary());
+        about.setGithub(SharedService.isNotBlank(request.getGithub()) ? request.getGithub() : about.getGithub());
+        about.setLinkedin(SharedService.isNotBlank(request.getLinkedin()) ? request.getLinkedin() : about.getLinkedin());
+        about.setMedium(SharedService.isNotBlank(request.getMedium()) ? request.getMedium() : about.getMedium());
 
          About status = aboutRepository.save(about);
 
@@ -122,7 +122,4 @@ public class AboutService {
         );
     }
 
-    public static boolean isNotBlank(String value) {
-        return value != null && !value.trim().isEmpty();
-    }
 }
