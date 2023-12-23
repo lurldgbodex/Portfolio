@@ -40,7 +40,7 @@ public class SkillController {
         return ResponseEntity.ok(service.updateSkill(request, id));
     }
 
-    @PatchMapping("/{id}/update-skill")
+    @PatchMapping("/about/{id}")
     public ResponseEntity<CustomResponse> update(
             @PathVariable long id, @RequestBody UpdateSkill request) throws ResourceNotFound, BadRequestException {
         return ResponseEntity.ok(service.updateSpecificSkill(id, request));

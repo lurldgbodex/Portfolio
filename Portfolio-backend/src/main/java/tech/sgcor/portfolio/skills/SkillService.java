@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
+import tech.sgcor.portfolio.project.ProjectDetails;
 import tech.sgcor.portfolio.shared.CustomResponse;
 import tech.sgcor.portfolio.shared.SharedService;
 
@@ -78,13 +79,23 @@ public class SkillService {
 
         List<Skill> skills = updateSkillType.getSkills();
 
-        if (!skills.isEmpty()) {
-            int noOfSkills = Math.min(skills.size(), request.getSkill().size());
+        if (request.getSkill() != null) {
+            var skillRequest = request.getSkill();
+            int noOfSkills = Math.min(skills.size(), skillRequest.size());
 
             for (int i = 0; i < noOfSkills; i++) {
                 Skill skill = skills.get(i);
-                String newSkillName = request.getSkill().get(i);
+                String newSkillName = skillRequest.get(i);
                 skill.setName(SharedService.isNotBlank(newSkillName) ? newSkillName : skill.getName());
+            }
+
+            if (skillRequest.size() > noOfSkills) {
+                for (int i = noOfSkills; i < skillRequest.size(); i++) {
+                    Skill newSkill = new Skill();
+                    newSkill.setName(skillRequest.get(i));
+                    newSkill.setSkillType(updateSkillType);
+                    skills.add(newSkill);
+                }
             }
             skillRepository.saveAll(skills);
         }
@@ -96,7 +107,7 @@ public class SkillService {
 
     @Transactional
     public CustomResponse deleteSkill(long id) throws ResourceNotFound {
-        var skillType = skillTypeRepository.findById(id)
+        skillTypeRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFound("Resource not found with id"));
 
         skillTypeRepository.deleteById(id);
