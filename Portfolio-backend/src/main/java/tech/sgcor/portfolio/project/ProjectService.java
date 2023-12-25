@@ -12,7 +12,6 @@ import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
 import tech.sgcor.portfolio.shared.SharedService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -104,7 +103,6 @@ public class ProjectService {
         return new CustomResponse(200, "Project updated successfully", HttpStatus.OK);
     }
 
-    @Transactional
     public CustomResponse updateDetails(
             long id, @Valid ProjectDetailsUpdate request) throws ResourceNotFound {
         ProjectDetails detail = projectDetailsRepository.findById(id)
