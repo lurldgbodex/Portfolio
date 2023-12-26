@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
@@ -14,7 +15,8 @@ import java.net.URI;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/abouts")
+@Secured("ROLE_ADMIN")
+@RequestMapping("/api/admin/abouts")
 public class AboutController {
     private final AboutService aboutService;
 

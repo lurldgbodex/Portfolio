@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
@@ -13,7 +14,8 @@ import tech.sgcor.portfolio.shared.SharedService;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api/educations")
+@RequestMapping("/api/admin/educations")
+@Secured("ROLE_ADMIN")
 @RequiredArgsConstructor
 public class EducationController {
     private final EducationService service;
