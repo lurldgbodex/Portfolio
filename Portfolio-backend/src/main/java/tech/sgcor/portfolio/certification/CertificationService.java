@@ -23,11 +23,8 @@ public class CertificationService {
     private final CertificationRepository repository;
     private final CertificationDetailsRepository detailsRepository;
 
-    public GetCertification getCertification(Long id) throws ResourceNotFound {
-        var certification = repository.findById(id)
-                .orElseThrow(()-> new ResourceNotFound("Certification not found with id"));
-
-        return new GetCertification(certification);
+    public List<Certification> getCertifications(Long userId) {
+        return repository.findByUserId(userId);
     }
 
     @Transactional
@@ -36,6 +33,7 @@ public class CertificationService {
         certification.setName(request.getName());
         certification.setBody(request.getBody());
         certification.setDate(request.getDate());
+        certification.setUserId(request.getUser_id());
 
         List<CertificationDetails> detailsList = request.getDetails()
                 .stream()

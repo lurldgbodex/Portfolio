@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
+import tech.sgcor.portfolio.shared.SharedService;
 
 import java.net.URI;
 
@@ -17,17 +18,12 @@ import java.net.URI;
 public class SkillController {
     private final SkillService service;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<GetSkill> getSkills(
-            @PathVariable long id) throws ResourceNotFound {
-        return ResponseEntity.ok(service.getSkills(id));
-    }
-
-    @PostMapping("/new")
+    @PostMapping("/add")
     public ResponseEntity<CustomResponse> createSkill(
             @RequestBody SkillRequest request, UriComponentsBuilder ucb) {
         var skills = service.createSkill(request);
-        URI location = ucb.path("/api/skills/{id}").buildAndExpand(skills.getId()).toUri();
+        URI location = ucb.path(SharedService.BASE_URL + "{id}")
+                .buildAndExpand(skills.getId()).toUri();
 
         var res = new CustomResponse(201, "skill created successfully", HttpStatus.CREATED);
 

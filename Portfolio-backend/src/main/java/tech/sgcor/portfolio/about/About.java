@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tech.sgcor.portfolio.user.User;
 
 import java.time.LocalDate;
 
@@ -18,8 +19,6 @@ public class About {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(nullable = false)
-    private String name;
     @Column(nullable = false)
     private String address;
     @Column(nullable = false)
@@ -38,4 +37,8 @@ public class About {
     private String linkedin;
     @Column
     private String medium;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

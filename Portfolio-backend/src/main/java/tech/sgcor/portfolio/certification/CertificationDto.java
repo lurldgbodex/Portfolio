@@ -10,7 +10,8 @@ import java.util.List;
 
 @Data
 public class CertificationDto {
-    private Long id;
+    @NotNull(message = "user_id is required")
+    private Long user_id;
     @NotBlank(message = "name is required and should not be blank")
     private String name;
     @NotBlank(message = "body is required and should not be blank")

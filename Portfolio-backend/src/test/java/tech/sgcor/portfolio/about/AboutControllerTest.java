@@ -33,21 +33,21 @@ class AboutControllerTest {
         assertThat(mvc).isNotNull();
     }
 
-    @Test
-    void getAboutSuccessTest() throws Exception {
-        AboutResponse res = new AboutResponse(
-                10L, "test", "tit", "add", "mail",
-                "2000-04-04", "911", "sum", new HashMap<>()
-        );
-
-        given(underTest.getAbout(10L)).willReturn(res);
-
-        mvc.perform(get("/api/abouts/10")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("name").value(res.name()));
-    }
+//    @Test
+//    void getAboutSuccessTest() throws Exception {
+//        AboutResponse res = new AboutResponse(
+//                10L, "test", "tit", "add", "mail",
+//                "2000-04-04", "911", "sum", new HashMap<>()
+//        );
+//
+//        given(underTest.getAbout(10L)).willReturn(res);
+//
+//        mvc.perform(get("/api/abouts/10")
+//                        .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath("name").value(res.name()));
+//    }
 
     @Test
     void getAboutNotFoundTest() throws Exception {

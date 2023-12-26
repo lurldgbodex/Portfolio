@@ -12,4 +12,6 @@ public class SkillRequest {
     private String name;
     @NotNull(message = "skill is required and cannot be blank")
     private List<String> skill;
+    @NotNull(message = "user_id is required")
+    private Long user_id;
 }

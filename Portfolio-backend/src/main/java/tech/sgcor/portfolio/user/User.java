@@ -1,4 +1,4 @@
-package tech.sgcor.portfolio.language;
+package tech.sgcor.portfolio.user;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -6,19 +6,19 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "languages")
 @NoArgsConstructor
-public class Language {
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue
     private Long id;
 
     @Column(nullable = false)
-    private Long userId;
+    private String firstName;
 
     @Column(nullable = false)
-    private String lang;
+    private String lastName;
 
-    @Column(nullable = false)
-    private String level;
+    @Column
+    private String middleName;
 }

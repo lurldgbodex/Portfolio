@@ -16,6 +16,9 @@ public class SkillType {
     private long id;
 
     @Column(nullable = false)
+    private Long userId;
+
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "skillType", cascade = CascadeType.ALL)

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
+import tech.sgcor.portfolio.shared.SharedService;
 
 import java.net.URI;
 
@@ -17,20 +18,13 @@ import java.net.URI;
 public class AboutController {
     private final AboutService aboutService;
 
-    @GetMapping("/{id}")
-    private ResponseEntity<AboutResponse> getAbout(
-            @PathVariable Long id) throws ResourceNotFound {
-        return ResponseEntity.ok(aboutService.getAbout(id));
-    }
-
     @PostMapping("/add")
     private ResponseEntity<CustomResponse> addAbout(
             @RequestBody CreateRequest request, UriComponentsBuilder ucb) {
         About about = aboutService.add(request);
         URI newAbout = ucb
-                .path("/api/abouts/{id}")
-                .buildAndExpand(about.getId()).toUri();
-
+                .path(SharedService.BASE_URL + "{id}")
+                .buildAndExpand(about.getUser().getId()).toUri();
 
         return ResponseEntity.created(newAbout)
                 .body(new CustomResponse(HttpStatus.CREATED.value(),

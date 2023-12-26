@@ -16,6 +16,8 @@ public class Experience {
     @GeneratedValue
     private Long id;
     @Column(nullable = false)
+    private Long userId;
+    @Column(nullable = false)
     private String company;
     @Column(nullable = false)
     private String role;

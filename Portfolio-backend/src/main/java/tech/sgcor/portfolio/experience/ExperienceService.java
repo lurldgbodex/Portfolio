@@ -11,6 +11,7 @@ import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
 import tech.sgcor.portfolio.shared.SharedService;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -21,23 +22,13 @@ import java.util.stream.Stream;
 public class ExperienceService {
     private final ExperienceRepository experienceRepository;
 
-    public ExperienceDto get(Long id) throws ResourceNotFound {
-        Experience experience = experienceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFound("Resource not found with id"));
-
-        return ExperienceDto
-                .builder()
-                .id(experience.getId())
-                .company(experience.getCompany())
-                .role(experience.getRole())
-                .description(experience.getDescription())
-                .start_date(experience.getStartDate())
-                .end_date(experience.getEndDate())
-                .build();
+    public List<Experience> getExperiences(Long userId) {
+        return experienceRepository.findByUserId(userId);
     }
 
     public Experience addExperience(@Valid ExperienceDto request) {
         Experience experience = new Experience();
+        experience.setUserId(request.getUser_id());
         experience.setCompany(request.getCompany());
         experience.setRole(request.getRole());
         experience.setDescription(request.getDescription());

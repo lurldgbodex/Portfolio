@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
+import tech.sgcor.portfolio.shared.SharedService;
 
 import java.net.URI;
 
@@ -17,18 +18,12 @@ import java.net.URI;
 public class ExperienceController {
     private final ExperienceService service;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ExperienceDto> getExperience(
-            @PathVariable Long id) throws ResourceNotFound {
-        return ResponseEntity.ok(service.get(id));
-    }
-
-    @PostMapping("/new")
+    @PostMapping("/add")
     public ResponseEntity<CustomResponse> postExperience(
             @RequestBody ExperienceDto request, UriComponentsBuilder ucb) {
         var experience = service.addExperience(request);
 
-        URI location = ucb.path("/api/experience/{id}")
+        URI location = ucb.path(SharedService.BASE_URL + "{id}")
                 .buildAndExpand(experience.getId()).toUri();
 
         return ResponseEntity

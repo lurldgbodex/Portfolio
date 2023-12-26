@@ -10,6 +10,8 @@ import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
 import tech.sgcor.portfolio.shared.SharedService;
 
+import java.util.List;
+
 @Service
 @Validated
 @RequiredArgsConstructor
@@ -21,20 +23,13 @@ public class LanguageService {
 
         language.setLang(request.getLang());
         language.setLevel(request.getLevel());
+        language.setUserId(request.getUser_id());
 
         return repository.save(language);
     }
 
-    public LanguageDto getLanguage(long id) throws ResourceNotFound {
-        var language = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFound("Resource not found with id"));
-
-        return LanguageDto
-             .builder()
-             .id(language.getId())
-             .lang(language.getLang())
-             .level(language.getLevel())
-             .build();
+    public List<Language> getLanguages(Long userId) {
+        return repository.findByUserId(userId);
     }
 
     public CustomResponse updateLanguage(

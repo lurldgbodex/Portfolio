@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
+import tech.sgcor.portfolio.shared.SharedService;
 
 import java.net.URI;
 
@@ -17,18 +18,12 @@ import java.net.URI;
 public class CertificationController {
     private final CertificationService service;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<GetCertification> getCertification(
-            @PathVariable Long id) throws ResourceNotFound {
-        return ResponseEntity.ok(service.getCertification(id));
-    }
-
     @PostMapping("/add")
     public ResponseEntity<CustomResponse> addCertification(
             @RequestBody CertificationDto request, UriComponentsBuilder ucb) {
         var certification = service.addCertification(request);
-        URI location = ucb.path("/api/certifications/{id}")
-                .buildAndExpand(certification.getId()).toUri();
+        URI location = ucb.path(SharedService.BASE_URL + "{id}")
+                .buildAndExpand(certification.getUserId()).toUri();
         var res = new CustomResponse(201,
                 "certification created successfully", HttpStatus.CREATED);
         return ResponseEntity.created(location).body(res);

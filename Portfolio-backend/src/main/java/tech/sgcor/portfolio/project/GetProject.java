@@ -1,4 +1,6 @@
 package tech.sgcor.portfolio.project;
 
-public record GetProject(Project projects) {
+import java.util.List;
+
+public record GetProject(List<Project> projects) {
 }

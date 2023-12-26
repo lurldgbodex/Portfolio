@@ -11,6 +11,8 @@ import java.time.LocalDate;
 @Builder
 public class EducationDto {
     private Long id;
+    @NotNull(message = "user_id is required")
+    private Long user_id;
     @NotBlank(message = "school is required")
     private String school;
     @NotBlank(message = "degree is required")

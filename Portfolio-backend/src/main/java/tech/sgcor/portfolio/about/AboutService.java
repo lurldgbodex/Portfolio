@@ -1,6 +1,7 @@
 package tech.sgcor.portfolio.about;
 
 import io.micrometer.common.util.StringUtils;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -10,44 +11,33 @@ import org.springframework.validation.annotation.Validated;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
 import tech.sgcor.portfolio.shared.SharedService;
+import tech.sgcor.portfolio.user.User;
+import tech.sgcor.portfolio.user.UserRepository;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-@RequiredArgsConstructor
 @Service
 @Validated
+@Transactional
+@RequiredArgsConstructor
 public class AboutService {
     private final AboutRepository aboutRepository;
+    private final UserRepository userRepository;
 
-    public AboutResponse getAbout(Long id) throws ResourceNotFound {
-        var about = aboutRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFound("Data not found with id " + id)
-                );
-
-        Map<String, String> socials = new HashMap<>();
-        socials.put("github", about.getGithub());
-        socials.put("linkedin", about.getLinkedin());
-        socials.put("medium", about.getMedium());
-
-        return new AboutResponse(
-                about.getId(),
-                about.getName(),
-                about.getTitle(),
-                about.getAddress(),
-                about.getEmail(),
-                about.getDob().toString(),
-                about.getPhoneNumber(),
-                about.getSummary(),
-                socials
-        );
+    public About getAbout(Long aboutId) {
+        return aboutRepository.findAboutWithUserById(aboutId);
     }
 
     public About add(@Valid CreateRequest request) {
+        User user = new User();
+        user.setFirstName(request.getFirst_name());
+        user.setLastName(request.getLast_name());
+        user.setMiddleName(SharedService.isNotBlank(
+                request.getMiddle_name()) ? request.getMiddle_name() : null);
+
         var about = About.builder()
-                .name(request.getName())
+                .user(user)
                 .email(request.getEmail())
                 .dob(request.getDob())
                 .title(request.getTitle())
@@ -65,15 +55,13 @@ public class AboutService {
 
     public CustomResponse update(
             Long id, @Valid UpdateRequest request) throws ResourceNotFound, BadRequestException {
-        var about = aboutRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFound("Data not found with id " + id)
-                );
-        if (request == null) {
-            throw new BadRequestException("you need to provide the field(s) you want to update");
+        var about = aboutRepository.findAboutWithUserById(id);
+
+        if (about == null) {
+            throw new ResourceNotFound("About not found with id");
         }
 
         boolean allFieldsBlank = Stream.of(
-                Objects.toString(request.getName(), ""),
                 Objects.toString(request.getTitle(), ""),
                 Objects.toString(request.getPhone_number(), ""),
                 Objects.toString(request.getDob(), ""),
@@ -82,26 +70,47 @@ public class AboutService {
                 Objects.toString(request.getSummary(), ""),
                 Objects.toString(request.getGithub(), ""),
                 Objects.toString(request.getLinkedin(), ""),
-                Objects.toString(request.getMedium(), "")
+                Objects.toString(request.getMedium(), ""),
+                Objects.toString(request.getFirst_name(), ""),
+                Objects.toString(request.getLast_name(), ""),
+                Objects.toString(request.getMiddle_name(), "")
         ).allMatch(StringUtils::isBlank);
 
         if (allFieldsBlank) {
             throw new BadRequestException("At least one field must be non-blank to perform the update");
         }
 
+        Long userId = about.getUser().getId();
 
-        about.setName(SharedService.isNotBlank(request.getName()) ? request.getName() : about.getName());
-        about.setTitle(SharedService.isNotBlank(request.getTitle()) ? request.getTitle() : about.getTitle());
-        about.setPhoneNumber(SharedService.isNotBlank(request.getPhone_number()) ? request.getPhone_number() : about.getPhoneNumber());
+        User user = userRepository.findById(userId).orElseThrow();
+
+        user.setFirstName(SharedService.isNotBlank(request.getFirst_name())
+                ? request.getFirst_name() : user.getFirstName());
+        user.setLastName(SharedService.isNotBlank(request.getLast_name())
+                ? request.getLast_name() : user.getLastName());
+        user.setMiddleName(SharedService.isNotBlank(request.getMiddle_name())
+                ? request.getMiddle_name() : user.getMiddleName());
+
+        about.setUser(user);
+        about.setTitle(SharedService.isNotBlank(request.getTitle())
+                ? request.getTitle() : about.getTitle());
+        about.setPhoneNumber(SharedService.isNotBlank(request.getPhone_number())
+                ? request.getPhone_number() : about.getPhoneNumber());
         about.setDob((request.getDob() != null) ? request.getDob() : about.getDob());
-        about.setAddress(SharedService.isNotBlank(request.getAddress()) ? request.getAddress() : about.getAddress());
-        about.setEmail(SharedService.isNotBlank(request.getEmail()) ? request.getEmail() : about.getEmail());
-        about.setSummary(SharedService.isNotBlank(request.getSummary()) ? request.getSummary() : about.getSummary());
-        about.setGithub(SharedService.isNotBlank(request.getGithub()) ? request.getGithub() : about.getGithub());
-        about.setLinkedin(SharedService.isNotBlank(request.getLinkedin()) ? request.getLinkedin() : about.getLinkedin());
-        about.setMedium(SharedService.isNotBlank(request.getMedium()) ? request.getMedium() : about.getMedium());
+        about.setAddress(SharedService.isNotBlank(request.getAddress())
+                ? request.getAddress() : about.getAddress());
+        about.setEmail(SharedService.isNotBlank(request.getEmail())
+                ? request.getEmail() : about.getEmail());
+        about.setSummary(SharedService.isNotBlank(request.getSummary())
+                ? request.getSummary() : about.getSummary());
+        about.setGithub(SharedService.isNotBlank(request.getGithub())
+                ? request.getGithub() : about.getGithub());
+        about.setLinkedin(SharedService.isNotBlank(request.getLinkedin())
+                ? request.getLinkedin() : about.getLinkedin());
+        about.setMedium(SharedService.isNotBlank(request.getMedium())
+                ? request.getMedium() : about.getMedium());
 
-         About status = aboutRepository.save(about);
+        aboutRepository.save(about);
 
         return new CustomResponse(
                          HttpStatus.OK.value(),
@@ -121,5 +130,4 @@ public class AboutService {
                 HttpStatus.OK
         );
     }
-
 }

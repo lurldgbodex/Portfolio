@@ -12,6 +12,8 @@ import java.time.LocalDate;
 @Builder
 public class ExperienceDto {
     private Long id;
+    @NotNull(message = "user_id is required")
+    private Long user_id;
     @NotBlank(message = "company cannot be empty or null")
     private String company;
     @NotBlank(message = "role cannot be empty or null")
