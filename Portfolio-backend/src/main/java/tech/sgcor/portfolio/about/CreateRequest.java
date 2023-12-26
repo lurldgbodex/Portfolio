@@ -12,8 +12,13 @@ import java.time.LocalDate;
 
 @Data
 public class CreateRequest {
-    @NotBlank(message = "Name is required")
-    private String name;
+    @NotBlank(message = "first_name is required")
+    private String first_name;
+
+    @NotBlank(message = "last_name is required")
+    private String last_name;
+
+    private String middle_name;
 
     @NotBlank(message = "Address is required")
     private String address;

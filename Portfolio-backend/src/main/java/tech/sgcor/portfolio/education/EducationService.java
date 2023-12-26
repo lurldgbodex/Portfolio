@@ -11,6 +11,7 @@ import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
 import tech.sgcor.portfolio.shared.SharedService;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -20,27 +21,15 @@ import java.util.stream.Stream;
 public class EducationService {
     private final EducationRepository repository;
 
-    public EducationDto getEducation(long id) throws ResourceNotFound {
-        var education = repository.findById(id)
-                .orElseThrow(()-> new ResourceNotFound("Resource not found with id"));
-
-        return EducationDto
-                .builder()
-                .id(education.getId())
-                .school(education.getSchool())
-                .degree(education.getDegree())
-                .course(education.getCourse())
-                .description(education.getDescription())
-                .grade(education.getGrade())
-                .start_date(education.getStartDate())
-                .end_date(education.getEndDate())
-                .build();
+    public List<Education> getEducations(Long userId) {
+        return repository.findByUserId(userId);
     }
 
     public Education createEducation(@Valid EducationDto request) {
         Education education = new Education();
 
         education.setSchool(request.getSchool());
+        education.setUserId(request.getUser_id());
         education.setDegree(request.getDegree());
         education.setDescription(request.getDescription());
         education.setGrade(request.getGrade());
@@ -70,13 +59,20 @@ public class EducationService {
             throw new BadRequestException("At least one field must not be blank to perform update");
         }
 
-        education.setSchool(SharedService.isNotBlank(request.getSchool()) ? request.getSchool() : education.getSchool());
-        education.setDegree(SharedService.isNotBlank(request.getDegree()) ? request.getDegree() : education.getDegree());
-        education.setGrade(SharedService.isNotBlank(request.getGrade()) ? request.getGrade() : education.getGrade());
-        education.setDescription(SharedService.isNotBlank(request.getDescription()) ? request.getDescription() : education.getDescription());
-        education.setStartDate(request.getStart_date() != null ? request.getStart_date() : education.getStartDate());
-        education.setEndDate(request.getEnd_date() != null ? request.getEnd_date() : education.getEndDate());
-        education.setCourse(SharedService.isNotBlank(request.getCourse()) ? request.getCourse() : education.getCourse());
+        education.setSchool(SharedService.isNotBlank(request.getSchool())
+                ? request.getSchool() : education.getSchool());
+        education.setDegree(SharedService.isNotBlank(request.getDegree())
+                ? request.getDegree() : education.getDegree());
+        education.setGrade(SharedService.isNotBlank(request.getGrade())
+                ? request.getGrade() : education.getGrade());
+        education.setDescription(SharedService.isNotBlank(request.getDescription())
+                ? request.getDescription() : education.getDescription());
+        education.setStartDate(request.getStart_date() != null
+                ? request.getStart_date() : education.getStartDate());
+        education.setEndDate(request.getEnd_date() != null
+                ? request.getEnd_date() : education.getEndDate());
+        education.setCourse(SharedService.isNotBlank(request.getCourse())
+                ? request.getCourse() : education.getCourse());
 
         return repository.save(education);
     }

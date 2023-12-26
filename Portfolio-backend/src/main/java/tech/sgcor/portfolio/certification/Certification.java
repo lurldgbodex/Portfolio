@@ -17,6 +17,9 @@ public class Certification {
     private Long id;
 
     @Column(nullable = false)
+    private Long userId;
+
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
+import tech.sgcor.portfolio.shared.SharedService;
 
 import java.net.URI;
 
@@ -17,18 +18,13 @@ import java.net.URI;
 public class LanguageController {
     private final LanguageService service;
 
-    @GetMapping("{id}")
-    public ResponseEntity<LanguageDto> getLanguage(
-            @PathVariable long id) throws ResourceNotFound {
-        return ResponseEntity.ok(service.getLanguage(id));
-    }
-
-    @PostMapping("/create")
+    @PostMapping("/add")
     public ResponseEntity<CustomResponse> createLanguage(
             @RequestBody LanguageDto request, UriComponentsBuilder ucb) {
         var language = service.createLanguage(request);
 
-        URI location = ucb.path("/api/languages/{id}").buildAndExpand(language.getId()).toUri();
+        URI location = ucb.path(SharedService.BASE_URL + "{id}")
+                .buildAndExpand(language.getId()).toUri();
 
         var res = new CustomResponse(201, "language created successfully", HttpStatus.CREATED);
         return ResponseEntity.created(location).body(res);

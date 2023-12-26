@@ -27,6 +27,7 @@ public class SkillService {
     public SkillType createSkill(@Valid SkillRequest request) {
         SkillType skillType = new SkillType();
         skillType.setName(request.getName());
+        skillType.setUserId(request.getUser_id());
 
         List<Skill> skills = request.getSkill().stream()
                 .map(skillName -> {
@@ -40,10 +41,8 @@ public class SkillService {
         return skillTypeRepository.save(skillType);
     }
 
-    public GetSkill getSkills(long id) throws ResourceNotFound {
-        var skill = skillTypeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFound("Resource not found with id"));
-        return new GetSkill(skill);
+    public List<SkillType> getSkills(Long userId) {
+        return skillTypeRepository.findByUserId(userId);
     }
 
     public CustomResponse updateSpecificSkill(

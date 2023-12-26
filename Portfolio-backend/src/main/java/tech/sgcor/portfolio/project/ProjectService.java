@@ -30,6 +30,7 @@ public class ProjectService {
         project.setName(request.getName());
         project.setType(request.getType());
         project.setUrl(request.getUrl());
+        project.setUserId(request.getUser_id());
 
         List<ProjectDetails> details = request.getDetails()
                 .stream()
@@ -44,11 +45,8 @@ public class ProjectService {
         return projectRepository.save(project);
     }
 
-    public GetProject getProject(long id) throws ResourceNotFound {
-        Project project = projectRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFound("Project not found with id"));
-
-        return new GetProject(project);
+    public List<Project> getProjects(Long userId) {
+        return projectRepository.findByUserId(userId);
     }
 
     @Transactional

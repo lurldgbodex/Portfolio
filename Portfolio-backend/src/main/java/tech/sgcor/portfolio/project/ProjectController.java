@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
+import tech.sgcor.portfolio.shared.SharedService;
 
 import java.net.URI;
 
@@ -17,17 +18,12 @@ import java.net.URI;
 public class ProjectController {
     private final ProjectService service;
 
-    @GetMapping("{id}")
-    public ResponseEntity<GetProject> getProject(
-            @PathVariable Long id) throws ResourceNotFound {
-        return ResponseEntity.ok(service.getProject(id));
-    }
-
     @PostMapping("/add")
     public ResponseEntity<CustomResponse> addProject(
             @RequestBody ProjectDto request, UriComponentsBuilder ucb) {
         Project project= service.createProject(request);
-        URI location = ucb.path("/api/project/{id}").buildAndExpand(project.getId()).toUri();
+        URI location = ucb.path(SharedService.BASE_URL + "{id}")
+                .buildAndExpand(project.getId()).toUri();
         var res = new CustomResponse(201,
                 "project created successfully", HttpStatus.CREATED);
         return ResponseEntity.created(location).body(res);

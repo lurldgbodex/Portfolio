@@ -8,27 +8,23 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
+import tech.sgcor.portfolio.shared.SharedService;
 
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api/education")
+@RequestMapping("/api/educations")
 @RequiredArgsConstructor
 public class EducationController {
     private final EducationService service;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<EducationDto> getEducation(
-            @PathVariable long id) throws ResourceNotFound {
-        return ResponseEntity.ok(service.getEducation(id));
-    }
-
-    @PostMapping("/create")
+    @PostMapping("/add")
     public ResponseEntity<CustomResponse> createEducation(
             @RequestBody EducationDto request, UriComponentsBuilder ucb) {
         var education = service.createEducation(request);
 
-        URI location = ucb.path("/api/education/{id}").buildAndExpand(education.getId()).toUri();
+        URI location = ucb.path(SharedService.BASE_URL + "{id}")
+                .buildAndExpand(education.getId()).toUri();
 
         return ResponseEntity.created(location)
                 .body(new CustomResponse(HttpStatus.CREATED.value(),

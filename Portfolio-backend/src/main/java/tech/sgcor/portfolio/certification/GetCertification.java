@@ -1,4 +1,6 @@
 package tech.sgcor.portfolio.certification;
 
-public record GetCertification(Certification certification) {
+import java.util.List;
+
+public record GetCertification(List<Certification> certification) {
 }

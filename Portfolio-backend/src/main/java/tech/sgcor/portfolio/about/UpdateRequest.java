@@ -10,7 +10,9 @@ import java.time.LocalDate;
 
 @Data
 public class UpdateRequest {
-    private String name;
+    private String first_name;
+    private String last_name;
+    private String middle_name;
     private String address;
 
     @ValidLocalDate
