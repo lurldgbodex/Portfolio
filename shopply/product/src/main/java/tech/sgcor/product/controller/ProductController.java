@@ -30,7 +30,13 @@ public class ProductController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProductResponse getProduct(@PathVariable(name = "id") String productId) {
-        return service.getProduct(productId);
+        return service.getProductById(productId);
+    }
+
+    @GetMapping("/categories/{categoryId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductResponse> getProductByCategory(@PathVariable(name = "categoryId") String id) {
+        return service.getProductsByCategory(id);
     }
 
     @GetMapping
