@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e5e970eb-4d9d-4f30-8bbc-ae3a85c0a5d9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/dto/ProductRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/dto/ProductRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/dto/ProductResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/dto/ProductResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/dto/UpdateProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/dto/UpdateProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/exception/ProductExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/exception/ProductExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/exception/ProductNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/exception/ResourceNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/repository/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/test/java/tech/sgcor/product/ProductApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/product/src/test/java/tech/sgcor/product/ProductApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/test/java/tech/sgcor/product/controller/ProductControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/product/src/test/java/tech/sgcor/product/controller/ProductControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/test/java/tech/sgcor/product/service/ProductServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/product/src/test/java/tech/sgcor/product/service/ProductServiceTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Record" />
+        <option value="Class" />
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2aIwvFQwLEg6VzrzBqKpchcdcJH" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;product&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;20&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/seguser/Lurldgbodex/Portfolio/shopply&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;/home/seguser/Lurldgbodex/Portfolio/shopply/Customer/src/main/java/tech/sgcor/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="tech.sgcor.order.repository" />
+      <recent name="tech.sgcor.order.model" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="tech.sgcor.product.service" />
+      <recent name="tech.sgcor.product.controller" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.ProductApplicationTests">
+    <configuration name="CategoryServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="product" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tech.sgcor.product.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tech.sgcor.product.service" />
+      <option name="MAIN_CLASS_NAME" value="tech.sgcor.product.service.CategoryServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CategoryServiceTest.createCategoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="product" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tech.sgcor.product.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tech.sgcor.product.service" />
+      <option name="MAIN_CLASS_NAME" value="tech.sgcor.product.service.CategoryServiceTest" />
+      <option name="METHOD_NAME" value="createCategoryTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CategoryServiceTest.updateCategoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="product" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tech.sgcor.product.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tech.sgcor.product.service" />
+      <option name="MAIN_CLASS_NAME" value="tech.sgcor.product.service.CategoryServiceTest" />
+      <option name="METHOD_NAME" value="updateCategoryTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="product" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tech.sgcor.product.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tech.sgcor.product" />
+      <option name="MAIN_CLASS_NAME" value="tech.sgcor.product.ProductApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductApplicationTests.shouldGetProductsByCategory" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="product" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tech.sgcor.product.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tech.sgcor.product" />
+      <option name="MAIN_CLASS_NAME" value="tech.sgcor.product.ProductApplicationTests" />
+      <option name="METHOD_NAME" value="shouldGetProductsByCategory" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.ProductApplicationTests" />
+        <item itemvalue="JUnit.ProductApplicationTests.shouldGetProductsByCategory" />
+        <item itemvalue="JUnit.CategoryServiceTest" />
+        <item itemvalue="JUnit.CategoryServiceTest.updateCategoryTest" />
+        <item itemvalue="JUnit.CategoryServiceTest.createCategoryTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e5e970eb-4d9d-4f30-8bbc-ae3a85c0a5d9" name="Changes" comment="" />
+      <created>1704019656716</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1704019656716</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.validation:jakarta.validation-api" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.data:spring-data-commons" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate.validator:hibernate-validator" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
+    <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Customer/src/main/java/tech/sgcor/Main.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/shopply$ProductServiceTest.ic" NAME="ProductServiceTest Coverage Results" MODIFIED="1704732491904" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>tech.sgcor.product.service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/shopply$CategoryServiceTest.ic" NAME="CategoryServiceTest Coverage Results" MODIFIED="1704804530624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>tech.sgcor.product.service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/shopply$ProductApplicationTests.ic" NAME="ProductApplicationTests Coverage Results" MODIFIED="1704807248565" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>tech.sgcor.product.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/shopply$ProductControllerTest.ic" NAME="ProductControllerTest Coverage Results" MODIFIED="1704732665317" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>tech.sgcor.product.controller.*</FILTER>
+    </SUITE>
+  </component>
+</project>
