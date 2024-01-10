@@ -54,7 +54,9 @@ class ProductControllerTest {
                 .name("new product")
                 .description("description")
                 .price(BigDecimal.valueOf(108))
-                .category("category")
+                .category_id("category")
+                .quantity(1)
+                .image_data("imageData")
                 .build();
 
         String requestString = objectMapper.writeValueAsString(request);
@@ -79,8 +81,10 @@ class ProductControllerTest {
                 .builder()
                 .id("productId")
                 .name("product")
-                .category("product category")
+                .category_id("product category")
                 .description("product description")
+                .quantity(10)
+                .image_data("image_data.png")
                 .price(BigDecimal.valueOf(44))
                 .build();
         when(underTest.getProduct("productId")).thenReturn(res);
@@ -90,7 +94,9 @@ class ProductControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(res.getName()))
                 .andExpect(jsonPath("$.id").value(res.getId()))
-                .andExpect(jsonPath("$.category").value(res.getCategory()))
+                .andExpect(jsonPath("$.category_id").value(res.getCategory_id()))
+                .andExpect(jsonPath("$.quantity").value(res.getQuantity()))
+                .andExpect(jsonPath("$.image_data").value(res.getImage_data()))
                 .andExpect(jsonPath("$.price").value(res.getPrice()))
                 .andExpect(jsonPath("$.description").value(res.getDescription()));
     }

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import java.math.BigDecimal;
 
@@ -13,7 +15,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class UpdateProduct {
     private String name;
-    private String category;
+    private String category_id;
     private String description;
     private BigDecimal price;
+    private Integer quantity;
+    private String image_data;
 }

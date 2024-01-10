@@ -28,8 +28,8 @@ public class ProductExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(ProductNotFoundException.class)
-    public CustomError notFoundExceptionHandler(ProductNotFoundException ex) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public CustomError notFoundExceptionHandler(ResourceNotFoundException ex) {
         return new CustomError(404, ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 

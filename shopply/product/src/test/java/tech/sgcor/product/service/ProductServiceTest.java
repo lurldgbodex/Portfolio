@@ -6,22 +6,21 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import tech.sgcor.product.dto.CustomResponse;
 import tech.sgcor.product.dto.ProductRequest;
 import tech.sgcor.product.dto.UpdateProduct;
 import tech.sgcor.product.exception.BadRequestException;
-import tech.sgcor.product.exception.ProductNotFoundException;
+import tech.sgcor.product.exception.ResourceNotFoundException;
 import tech.sgcor.product.model.Product;
 import tech.sgcor.product.repository.ProductRepository;
 
 import java.math.BigDecimal;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,12 +33,17 @@ class ProductServiceTest {
 
     @Test
     void createProductSuccess() {
+        String image = "image.png";
+        String encodedImage = Base64.getEncoder().encodeToString(image.getBytes());
+
         ProductRequest request = ProductRequest
                 .builder()
                 .name("iphone 13")
-                .category("Phone")
+                .category_id("Phone")
+                .quantity(2)
                 .description("Apple product")
                 .price(BigDecimal.valueOf(1000))
+                .image_data(encodedImage)
                 .build();
 
         var res = underTest.createProduct(request);
@@ -49,44 +53,55 @@ class ProductServiceTest {
     }
 
     @Test
-    void getProductSuccess() throws ProductNotFoundException {
+    void getProductSuccess() throws ResourceNotFoundException {
+        byte[] image = "image.png".getBytes();
+
         Product product = Product
                 .builder()
                 .id("89837")
                 .name("MacBook pro")
-                .category("pc")
+                .categoryId("pc")
                 .price(BigDecimal.valueOf(5000))
                 .description("Apple pc")
+                .imageData(image)
                 .build();
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
 
-        var getProduct = underTest.getProduct(product.getId());
+        var getProduct = underTest.getProductById(product.getId());
+
+        var decodeImage = Base64.getEncoder().encodeToString(image);
 
         assertThat(getProduct.getId()).isEqualTo(product.getId());
         assertThat(getProduct.getName()).isEqualTo(product.getName());
         assertThat(getProduct.getDescription()).isEqualTo(product.getDescription());
         assertThat(getProduct.getPrice()).isEqualTo(product.getPrice());
-        assertThat(getProduct.getCategory()).isEqualTo(product.getCategory());
+        assertThat(getProduct.getCategory_id()).isEqualTo(product.getCategoryId());
+        assertThat(getProduct.getQuantity()).isEqualTo(product.getQuantity());
+        assertThat(getProduct.getImage_data()).isEqualTo(decodeImage);
 
         verify(productRepository, times(1)).findById(product.getId());
     }
 
     @Test
     void getProductFailure() {
-        assertThatThrownBy(() -> underTest.getProduct("8398radix3"))
-                .isInstanceOf(ProductNotFoundException.class)
+        assertThatThrownBy(() -> underTest.getProductById("8398radix3"))
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("product not found with id");
     }
 
     @Test
     void getAllProductsSuccess() {
+        byte[] image = "image.png".getBytes();
+
         Product product = Product
                 .builder()
                 .id("newProductID")
                 .name("new product 1")
+                .imageData(image)
                 .build();
         Product anotherProduct = Product
                 .builder()
+                .imageData(image)
                 .id("product2ID")
                 .build();
 
@@ -98,6 +113,7 @@ class ProductServiceTest {
                 .builder()
                 .id(productResponse.getId())
                 .name(productResponse.getName())
+                .imageData(Base64.getDecoder().decode(productResponse.getImage_data()))
                 .build()).toList();
 
         assertThat(products).isNotEmpty();
@@ -146,12 +162,6 @@ class ProductServiceTest {
 
     @Test
     void updateProductNotFoundTest() {
-        // Mock product
-        Product product = Product
-                .builder()
-                .name("product name")
-                .build();
-
         // Mock find product by id
         when(productRepository.findById("productId")).thenReturn(Optional.empty());
 
@@ -163,7 +173,7 @@ class ProductServiceTest {
 
         // assertion
         assertThatThrownBy(() -> underTest.updateProduct("productId", request))
-                .isInstanceOf(ProductNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("product not found");
     }
 
@@ -213,7 +223,7 @@ class ProductServiceTest {
         when(productRepository.findById("productId")).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> underTest.deleteProduct("productId"))
-                .isInstanceOf(ProductNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("product with id not found");
     }
 }
