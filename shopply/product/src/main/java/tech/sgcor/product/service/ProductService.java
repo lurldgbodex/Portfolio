@@ -14,6 +14,7 @@ import java.net.URI;
 import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -92,6 +93,39 @@ public class ProductService {
         List<Product> products = productRepository.findAll();
 
         return products.stream().map(this::mapToProductResponse).toList();
+    }
+
+    /**
+     * description: search products containing search keyword using regex
+     * 
+     * @param keyword: words to search against
+     * @return list of products matching search keyword
+     */
+    public List<ProductResponse> searchProducts(String keyword) {
+        // create regex pattern to match any part of the product name containing keyword
+        Pattern pattern = Pattern.compile(".*" + keyword + ".*", Pattern.CASE_INSENSITIVE);
+
+        // find products using regex pattern
+        List<Product> matchingProducts = productRepository.findByNameRegex(pattern);
+
+        // sort products based on exact matches first
+        List<Product> sortedProducts = matchingProducts.stream()
+                .sorted((p1, p2) -> {
+                    boolean exactMatch1 = p1.getName().equalsIgnoreCase(keyword);
+                    boolean exactMatch2 = p2.getName().equalsIgnoreCase(keyword);
+
+                    // sort by exact matches first
+                    if (exactMatch1 && !exactMatch2) {
+                        return -1;
+                    } else if (!exactMatch1 && exactMatch2) {
+                        return 1;
+                    }
+
+                    // sort by product name in a case-insensitive manner
+                    return p1.getName().compareToIgnoreCase(p2.getName());
+                }).toList();
+
+        return sortedProducts.stream().map(this::mapToProductResponse).toList();
     }
 
     /**

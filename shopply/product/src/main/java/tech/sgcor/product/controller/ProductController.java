@@ -39,6 +39,12 @@ public class ProductController {
         return service.getProductsByCategory(id);
     }
 
+    @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductResponse> searchProducts(@RequestParam(name = "keyword") String keyword) {
+        return service.searchProducts(keyword);
+    }
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ProductResponse> getAllProducts() {
