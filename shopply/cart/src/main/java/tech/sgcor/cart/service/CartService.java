@@ -1,5 +1,7 @@
 package tech.sgcor.cart.service;
 
+import com.github.dockerjava.api.exception.BadRequestException;
+import com.github.dockerjava.api.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,10 @@ public class CartService {
 
     public CustomResponse removeFromCart(String userId, String productId) {
         String cartKey = getCartKey(userId);
+
+        if (!redisTemplate.opsForHash().hasKey(cartKey, productId)) {
+            throw new NotFoundException("product not found with id");
+        }
         redisTemplate.opsForHash().delete(cartKey, productId);
 
         return new CustomResponse(200, "item removed from cart");
@@ -31,13 +37,23 @@ public class CartService {
 
     public CustomResponse updateCartItemQuantity(String userId, String productId, int quantity) {
         String cartKey = getCartKey(userId);
+
+        if (quantity < 0) {
+            throw new BadRequestException("quantity cannot be less than 0");
+        }
+
+        if (!redisTemplate.opsForHash().hasKey(cartKey, productId)) {
+            throw new NotFoundException("product not found with id");
+        }
+
         CartItem cartItem = (CartItem) redisTemplate.opsForHash().get(cartKey, productId);
         if (cartItem != null) {
             cartItem.setQuantity(quantity);
             redisTemplate.opsForHash().put(cartKey, productId, cartItem);
+            return new CustomResponse(200, "cart item updated");
+        } else {
+            throw new IllegalStateException("unexpected state: cart item is null for productId");
         }
-
-        return new CustomResponse(200, "cart item updated");
     }
 
     public CustomResponse clearCart(String userId) {

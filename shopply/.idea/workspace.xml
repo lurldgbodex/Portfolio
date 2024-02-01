@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5e970eb-4d9d-4f30-8bbc-ae3a85c0a5d9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cart/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cart/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/src/main/java/tech/sgcor/cart/controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart/src/main/java/tech/sgcor/cart/controller/CartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/src/main/java/tech/sgcor/cart/model/CartItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart/src/main/java/tech/sgcor/cart/model/CartItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/src/main/java/tech/sgcor/cart/service/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart/src/main/java/tech/sgcor/cart/service/CartService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,9 +21,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="Record" />
         <option value="JUnit5 Test Class" />
         <option value="Class" />
-        <option value="Record" />
       </list>
     </option>
   </component>
@@ -45,22 +48,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "cart-services",
-    "jdk.selected.JAVA_MODULE": "20",
-    "last_opened_file_path": "/home/seguser/Lurldgbodex/Portfolio/shopply",
-    "onboarding.tips.debug.path": "/home/seguser/Lurldgbodex/Portfolio/shopply/Customer/src/main/java/tech/sgcor/Main.java",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;cart-services&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;20&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/seguser/Lurldgbodex/Portfolio/shopply&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;/home/seguser/Lurldgbodex/Portfolio/shopply/Customer/src/main/java/tech/sgcor/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="tech.sgcor.product.dto" />
@@ -74,84 +78,86 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="tech.sgcor.cart" />
       <recent name="tech.sgcor.product.service" />
       <recent name="tech.sgcor.product.controller" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ProductApplicationTests">
-    <configuration name="CategoryServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="product" />
+  <component name="RunManager" selected="JUnit.CartApplicationTest">
+    <configuration name="CartApplicationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="cart" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="tech.sgcor.product.service.*" />
+          <option name="PATTERN" value="tech.sgcor.cart.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="tech.sgcor.product.service" />
-      <option name="MAIN_CLASS_NAME" value="tech.sgcor.product.service.CategoryServiceTest" />
+      <option name="PACKAGE_NAME" value="tech.sgcor.cart" />
+      <option name="MAIN_CLASS_NAME" value="tech.sgcor.cart.CartApplicationTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CategoryServiceTest.updateCategoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="product" />
+    <configuration name="CartApplicationTest.removeFromCart_NoProductFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="cart" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="tech.sgcor.product.service.*" />
+          <option name="PATTERN" value="tech.sgcor.cart.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="tech.sgcor.product.service" />
-      <option name="MAIN_CLASS_NAME" value="tech.sgcor.product.service.CategoryServiceTest" />
-      <option name="METHOD_NAME" value="updateCategoryTest" />
+      <option name="PACKAGE_NAME" value="tech.sgcor.cart" />
+      <option name="MAIN_CLASS_NAME" value="tech.sgcor.cart.CartApplicationTest" />
+      <option name="METHOD_NAME" value="removeFromCart_NoProductFound" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="product" />
+    <configuration name="CartApplicationTest.removeFromCart_shouldRemoveFromCart" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="cart" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="tech.sgcor.product.*" />
+          <option name="PATTERN" value="tech.sgcor.cart.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="tech.sgcor.product" />
-      <option name="MAIN_CLASS_NAME" value="tech.sgcor.product.ProductApplicationTests" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProductApplicationTests.GetProductTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="product" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="tech.sgcor.product.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="tech.sgcor.product" />
-      <option name="MAIN_CLASS_NAME" value="tech.sgcor.product.ProductApplicationTests" />
-      <option name="METHOD_NAME" value="GetProductTest" />
+      <option name="PACKAGE_NAME" value="tech.sgcor.cart" />
+      <option name="MAIN_CLASS_NAME" value="tech.sgcor.cart.CartApplicationTest" />
+      <option name="METHOD_NAME" value="removeFromCart_shouldRemoveFromCart" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductApplicationTests.shouldGetProductsByCategory" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="product" />
+    <configuration name="CartApplicationTest.updateCartItemQuantity_ShouldFailUpdate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="cart" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="tech.sgcor.product.*" />
+          <option name="PATTERN" value="tech.sgcor.cart.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="tech.sgcor.product" />
-      <option name="MAIN_CLASS_NAME" value="tech.sgcor.product.ProductApplicationTests" />
-      <option name="METHOD_NAME" value="shouldGetProductsByCategory" />
+      <option name="PACKAGE_NAME" value="tech.sgcor.cart" />
+      <option name="MAIN_CLASS_NAME" value="tech.sgcor.cart.CartApplicationTest" />
+      <option name="METHOD_NAME" value="updateCartItemQuantity_ShouldFailUpdate" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CartApplicationTest.updateCartItemQuantity_ShouldUpdateCartItemQuantity" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="cart" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tech.sgcor.cart.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tech.sgcor.cart" />
+      <option name="MAIN_CLASS_NAME" value="tech.sgcor.cart.CartApplicationTest" />
+      <option name="METHOD_NAME" value="updateCartItemQuantity_ShouldUpdateCartItemQuantity" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -165,11 +171,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ProductApplicationTests" />
-        <item itemvalue="JUnit.ProductApplicationTests.GetProductTest" />
-        <item itemvalue="JUnit.ProductApplicationTests.shouldGetProductsByCategory" />
-        <item itemvalue="JUnit.CategoryServiceTest" />
-        <item itemvalue="JUnit.CategoryServiceTest.updateCategoryTest" />
+        <item itemvalue="JUnit.CartApplicationTest" />
+        <item itemvalue="JUnit.CartApplicationTest.updateCartItemQuantity_ShouldFailUpdate" />
+        <item itemvalue="JUnit.CartApplicationTest.updateCartItemQuantity_ShouldUpdateCartItemQuantity" />
+        <item itemvalue="JUnit.CartApplicationTest.removeFromCart_NoProductFound" />
+        <item itemvalue="JUnit.CartApplicationTest.removeFromCart_shouldRemoveFromCart" />
       </list>
     </recent_temporary>
   </component>
@@ -207,6 +213,9 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/shopply$ProductServiceTest.ic" NAME="ProductServiceTest Coverage Results" MODIFIED="1704732491904" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>tech.sgcor.product.service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/shopply$CartApplicationTest_addToCart_ShouldAddItemToCart.ic" NAME="CartApplicationTest.addToCart_ShouldAddItemToCart Coverage Results" MODIFIED="1706549904592" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>tech.sgcor.cart.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/shopply$CategoryServiceTest.ic" NAME="CategoryServiceTest Coverage Results" MODIFIED="1704804530624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>tech.sgcor.product.service.*</FILTER>
