@@ -18,6 +18,7 @@
       <module>inventory</module>
       <module>payment</module>
       <module>rating-review</module>
+      <module>shipping</module>
   </modules>
 
   <properties>
