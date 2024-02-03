@@ -3,6 +3,7 @@ package tech.sgcor.product.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import tech.sgcor.product.dto.*;
 import tech.sgcor.product.exception.BadRequestException;
@@ -21,7 +22,9 @@ import java.util.stream.Stream;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
+    private static final String INVENTORY_SERVICE_URL = "http://inventory-service:8081/api/inventory";
     private final ProductRepository productRepository;
+    private final RestTemplate restTemplate;
 
     /**
      * description: create a new product
@@ -48,6 +51,9 @@ public class ProductService {
                 .imageData(imageData)
                 .build();
         productRepository.save(product);
+
+        // create an inventory of the product
+        notifyInventoryService(product.getId(), product.getQuantity());
 
         log.info("product with id {} created successfully", product.getId());
 
@@ -200,6 +206,8 @@ public class ProductService {
 
         productRepository.save(product);
 
+        notifyInventoryService(product.getId(), product.getQuantity());
+
         return new CustomResponse(200, "product updated successfully");
     }
 
@@ -230,5 +238,17 @@ public class ProductService {
         } catch (IllegalArgumentException e) {
             return false;
         }
+    }
+
+    /**
+     * description: helper method to call and update inventory-service.
+     *
+     * @param productId: id of the product to update or create
+     * @param quantity: quantity of the product
+     */
+    private void notifyInventoryService(String productId, int quantity) {
+        String updateInventoryUrl =
+                INVENTORY_SERVICE_URL + "/update/productId=" + productId + "?quantity=" + quantity;
+        restTemplate.postForObject(updateInventoryUrl, null, Void.class);
     }
 }

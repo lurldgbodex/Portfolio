@@ -14,6 +14,8 @@
   <modules>
     <module>product</module>
       <module>cart</module>
+      <module>order</module>
+      <module>inventory</module>
   </modules>
 
   <properties>
