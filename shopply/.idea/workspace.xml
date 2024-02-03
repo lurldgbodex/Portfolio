@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5e970eb-4d9d-4f30-8bbc-ae3a85c0a5d9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/inventory/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/cart/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/controller/OrderController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/product/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,8 +21,8 @@
       <list>
         <option value="Interface" />
         <option value="JUnit5 Test Class" />
-        <option value="Enum" />
         <option value="Record" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -57,7 +54,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "order-service",
+    "git-widget-placeholder": "dev",
     "jdk.selected.JAVA_MODULE": "20",
     "last_opened_file_path": "/home/seguser/Lurldgbodex/Portfolio/shopply",
     "onboarding.tips.debug.path": "/home/seguser/Lurldgbodex/Portfolio/shopply/Customer/src/main/java/tech/sgcor/Main.java",
@@ -70,11 +67,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="tech.sgcor.payment.dto" />
       <recent name="tech.sgcor.order.exception" />
       <recent name="tech.sgcor.order.dto" />
       <recent name="tech.sgcor.order.model" />
       <recent name="tech.sgcor.product.dto" />
-      <recent name="tech.sgcor.order.repository" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />

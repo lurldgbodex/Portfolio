@@ -16,6 +16,7 @@
       <module>cart</module>
       <module>order</module>
       <module>inventory</module>
+      <module>payment</module>
   </modules>
 
   <properties>

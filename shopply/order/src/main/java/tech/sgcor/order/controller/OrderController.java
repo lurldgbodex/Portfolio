@@ -40,7 +40,7 @@ public class OrderController {
 
     @PutMapping("/{orderId}/update-status")
     public CustomResponse updateOrderStatus(@PathVariable(name = "orderId") Long id,
-                                            @RequestParam String status) {
+                                            @RequestParam(name = "status") String status) {
         return orderService.updateOrderStatus(id, status);
     }
 }
