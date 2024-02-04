@@ -19,6 +19,7 @@
       <module>payment</module>
       <module>rating-review</module>
       <module>shipping</module>
+      <module>analytics</module>
   </modules>
 
   <properties>
