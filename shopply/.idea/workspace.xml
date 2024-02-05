@@ -5,10 +5,116 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5e970eb-4d9d-4f30-8bbc-ae3a85c0a5d9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/analytics/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart-service/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/discovery-server/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventory-service/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/analytics-service/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/analytics-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/src/main/java/tech/sgcor/analytics/AnalyticsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/analytics-service/src/main/java/tech/sgcor/analytics/AnalyticsApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/src/main/java/tech/sgcor/analytics/controller/AnalyticsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/analytics-service/src/main/java/tech/sgcor/analytics/controller/AnalyticsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/src/main/java/tech/sgcor/analytics/dto/SalesReportDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/analytics-service/src/main/java/tech/sgcor/analytics/dto/SalesReportDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/src/main/java/tech/sgcor/analytics/model/SalesReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/analytics-service/src/main/java/tech/sgcor/analytics/model/SalesReport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/src/main/java/tech/sgcor/analytics/repository/SalesReportRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/analytics-service/src/main/java/tech/sgcor/analytics/repository/SalesReportRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytics/src/main/java/tech/sgcor/analytics/service/AnalyticsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/analytics-service/src/main/java/tech/sgcor/analytics/service/AnalyticsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/src/main/java/tech/sgcor/cart/CartApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/tech/sgcor/cart/CartApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/src/main/java/tech/sgcor/cart/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/tech/sgcor/cart/config/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/src/main/java/tech/sgcor/cart/controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/tech/sgcor/cart/controller/CartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/src/main/java/tech/sgcor/cart/dto/CartTotalResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/tech/sgcor/cart/dto/CartTotalResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/src/main/java/tech/sgcor/cart/dto/CustomResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/tech/sgcor/cart/dto/CustomResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/src/main/java/tech/sgcor/cart/exception/CartServiceExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/tech/sgcor/cart/exception/CartServiceExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/src/main/java/tech/sgcor/cart/exception/CustomError.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/tech/sgcor/cart/exception/CustomError.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/src/main/java/tech/sgcor/cart/model/CartItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/tech/sgcor/cart/model/CartItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/src/main/java/tech/sgcor/cart/service/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/tech/sgcor/cart/service/CartService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/src/main/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/resources/banner.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart/src/test/java/tech/sgcor/cart/CartApplicationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/test/java/tech/sgcor/cart/CartApplicationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/src/main/java/tech/sgcor/inventory/InventoryApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/tech/sgcor/inventory/InventoryApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/src/main/java/tech/sgcor/inventory/controller/InventoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/tech/sgcor/inventory/controller/InventoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/src/main/java/tech/sgcor/inventory/model/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/tech/sgcor/inventory/model/Inventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/src/main/java/tech/sgcor/inventory/repository/InventoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/tech/sgcor/inventory/repository/InventoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/src/main/java/tech/sgcor/inventory/service/InventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/tech/sgcor/inventory/service/InventoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/src/main/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/resources/banner.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/OrderApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/OrderApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/controller/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/dto/CreateOrderResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/dto/CreateOrderResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/dto/CustomResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/dto/CustomResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/dto/OrderDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/dto/OrderDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/dto/OrderItemDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/dto/OrderItemDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/dto/OrderRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/dto/OrderRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/exception/BadRequestException.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/exception/BadRequestException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/exception/CustomError.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/exception/CustomError.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/exception/OrderExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/exception/OrderExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/exception/OrderNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/exception/OrderNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/exception/ProductNotAvailableException.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/exception/ProductNotAvailableException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/model/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/model/OrderItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/model/OrderItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/model/OrderStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/model/OrderStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/repository/OrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/tech/sgcor/order/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/tech/sgcor/order/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/resources/banner.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/src/main/java/tech/sgcor/payment/PaymentApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/tech/sgcor/payment/PaymentApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/src/main/java/tech/sgcor/payment/dto/PaymentDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/tech/sgcor/payment/dto/PaymentDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/src/main/java/tech/sgcor/payment/dto/PaymentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/tech/sgcor/payment/dto/PaymentRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/src/main/java/tech/sgcor/payment/model/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/tech/sgcor/payment/model/Payment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/src/main/java/tech/sgcor/payment/model/PaymentStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/tech/sgcor/payment/model/PaymentStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/src/main/java/tech/sgcor/payment/repository/PaymentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/tech/sgcor/payment/repository/PaymentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/src/main/java/tech/sgcor/payment/service/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/tech/sgcor/payment/service/PaymentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/ProductApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/ProductApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/controller/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/dto/CategoryDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/dto/CategoryDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/dto/CategoryUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/dto/CategoryUpdate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/dto/CustomError.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/dto/CustomError.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/dto/CustomResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/dto/CustomResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/dto/ProductRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/dto/ProductRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/dto/ProductResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/dto/ProductResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/dto/UpdateProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/dto/UpdateProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/exception/BadRequestException.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/exception/BadRequestException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/exception/ProductExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/exception/ProductExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/exception/ResourceNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/exception/ResourceNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/model/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/model/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/repository/CategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/repository/CategoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/repository/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/service/CategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/java/tech/sgcor/product/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/tech/sgcor/product/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/main/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/resources/banner.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/test/java/tech/sgcor/product/ProductApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/test/java/tech/sgcor/product/ProductApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/test/java/tech/sgcor/product/controller/ProductControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/test/java/tech/sgcor/product/controller/ProductControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/test/java/tech/sgcor/product/service/CategoryServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/test/java/tech/sgcor/product/service/CategoryServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/src/test/java/tech/sgcor/product/service/ProductServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/test/java/tech/sgcor/product/service/ProductServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rating-review/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rating-review/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shipping/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shipping/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shipping/src/main/java/tech/sgcor/shipping/ShippingApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/tech/sgcor/shipping/ShippingApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shipping/src/main/java/tech/sgcor/shipping/controller/ShippingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/tech/sgcor/shipping/controller/ShippingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shipping/src/main/java/tech/sgcor/shipping/dto/CreateShippingAddressRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/tech/sgcor/shipping/dto/CreateShippingAddressRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shipping/src/main/java/tech/sgcor/shipping/dto/OrderFulfillmentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/tech/sgcor/shipping/dto/OrderFulfillmentRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shipping/src/main/java/tech/sgcor/shipping/dto/ShippingAddressDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/tech/sgcor/shipping/dto/ShippingAddressDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shipping/src/main/java/tech/sgcor/shipping/exception/ShippingExceptionsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/tech/sgcor/shipping/exception/ShippingExceptionsHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shipping/src/main/java/tech/sgcor/shipping/model/ShippingAddress.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/tech/sgcor/shipping/model/ShippingAddress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shipping/src/main/java/tech/sgcor/shipping/repository/ShippingAddressRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/tech/sgcor/shipping/repository/ShippingAddressRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shipping/src/main/java/tech/sgcor/shipping/service/FulfillmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/tech/sgcor/shipping/service/FulfillmentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shipping/src/main/java/tech/sgcor/shipping/service/ShippingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/tech/sgcor/shipping/service/ShippingService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +159,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "analytics",
+    "git-widget-placeholder": "api-gateway",
     "jdk.selected.JAVA_MODULE": "20",
     "last_opened_file_path": "/home/seguser/Lurldgbodex/Portfolio/shopply",
     "onboarding.tips.debug.path": "/home/seguser/Lurldgbodex/Portfolio/shopply/Customer/src/main/java/tech/sgcor/Main.java",
@@ -61,7 +167,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -84,9 +190,45 @@
       <recent name="tech.sgcor.product.controller" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CartApplicationTest">
+  <component name="RunManager" selected="Application.DiscoveryServerApplication">
+    <configuration name="DiscoveryServerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="tech.sgcor.discoveryserver.DiscoveryServerApplication" />
+      <module name="discovery-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tech.sgcor.discoveryserver.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="tech.sgcor.product.ProductApplication" />
+      <module name="product-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tech.sgcor.product.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in inventory" type="JUnit" factoryName="JUnit" singleton="false" nameIsGenerated="true">
+      <module name="inventory-service" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CartApplicationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="cart" />
+      <module name="cart-service" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="tech.sgcor.cart.*" />
@@ -100,40 +242,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CartApplicationTest.removeFromCart_NoProductFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="cart" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="tech.sgcor.cart.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="tech.sgcor.cart" />
-      <option name="MAIN_CLASS_NAME" value="tech.sgcor.cart.CartApplicationTest" />
-      <option name="METHOD_NAME" value="removeFromCart_NoProductFound" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CartApplicationTest.removeFromCart_shouldRemoveFromCart" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="cart" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="tech.sgcor.cart.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="tech.sgcor.cart" />
-      <option name="MAIN_CLASS_NAME" value="tech.sgcor.cart.CartApplicationTest" />
-      <option name="METHOD_NAME" value="removeFromCart_shouldRemoveFromCart" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="CartApplicationTest.updateCartItemQuantity_ShouldFailUpdate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="cart" />
+      <module name="cart-service" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="tech.sgcor.cart.*" />
@@ -149,7 +259,7 @@
       </method>
     </configuration>
     <configuration name="CartApplicationTest.updateCartItemQuantity_ShouldUpdateCartItemQuantity" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="cart" />
+      <module name="cart-service" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="tech.sgcor.cart.*" />
@@ -172,11 +282,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ProductApplication" />
+        <item itemvalue="Application.DiscoveryServerApplication" />
         <item itemvalue="JUnit.CartApplicationTest" />
         <item itemvalue="JUnit.CartApplicationTest.updateCartItemQuantity_ShouldFailUpdate" />
         <item itemvalue="JUnit.CartApplicationTest.updateCartItemQuantity_ShouldUpdateCartItemQuantity" />
-        <item itemvalue="JUnit.CartApplicationTest.removeFromCart_NoProductFound" />
-        <item itemvalue="JUnit.CartApplicationTest.removeFromCart_shouldRemoveFromCart" />
       </list>
     </recent_temporary>
   </component>
@@ -226,6 +336,9 @@
     </SUITE>
     <SUITE FILE_PATH="coverage/shopply$CartApplicationTest.ic" NAME="CartApplicationTest Coverage Results" MODIFIED="1706811345711" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>tech.sgcor.cart.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/shopply$DiscoveryServerApplication.ic" NAME="DiscoveryServerApplication Coverage Results" MODIFIED="1707050581252" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>tech.sgcor.discoveryserver.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/shopply$ProductApplicationTests_GetProductTest.ic" NAME="ProductApplicationTests.GetProductTest Coverage Results" MODIFIED="1704904279182" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>tech.sgcor.product.*</FILTER>
