@@ -1,9 +1,23 @@
-services:
-  mongodb:
-    image: 'mongo:latest'
-    ports:
-      - "27017:27017"
-    environment:
-      - 'MONGO_INITDB_DATABASE=products'
-      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
-      - 'MONGO_INITDB_ROOT_USERNAME=root'
+#services:
+#  user-service:
+#    container_name: user-service
+#    image: mysql
+#    volumes:
+#      - ./mysql_user_data:/var/lib/mysql
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: users
+#      MYSQL_USER: seguser
+#      MYSQL_PASSWORD: password
+#
+#  product-service:
+#    container_name: product-service
+#    image: 'mongo:latest'
+#    restart: unless-stopped
+#    ports:
+#      - "27017:27017"
+#    expose:
+#      - "27017"
+#    volumes:
+#      - ./product-data:/data/db
+
