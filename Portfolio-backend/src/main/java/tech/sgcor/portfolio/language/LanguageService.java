@@ -1,11 +1,9 @@
 package tech.sgcor.portfolio.language;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
+import tech.sgcor.portfolio.exceptions.BadRequestException;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
 import tech.sgcor.portfolio.shared.SharedService;
@@ -13,12 +11,11 @@ import tech.sgcor.portfolio.shared.SharedService;
 import java.util.List;
 
 @Service
-@Validated
 @RequiredArgsConstructor
 public class LanguageService {
     private final LanguageRepository repository;
 
-    public Language createLanguage(@Valid LanguageDto request) {
+    public Language createLanguage(LanguageDto request) {
         var language = new Language();
 
         language.setLang(request.getLang());
@@ -32,10 +29,9 @@ public class LanguageService {
         return repository.findByUserId(userId);
     }
 
-    public CustomResponse updateLanguage(
-            long id, @Valid LanguageUpdate request) throws ResourceNotFound, BadRequestException {
+    public CustomResponse updateLanguage(long id, LanguageUpdate request) {
         var language = repository.findById(id)
-                .orElseThrow(() ->new ResourceNotFound("Resource not found with id"));
+                .orElseThrow(() -> new ResourceNotFound("Resource not found with id"));
 
         if (request.getLang() == null && request.getLevel() == null) {
             throw new BadRequestException("you need to provide field to update");
@@ -49,7 +45,7 @@ public class LanguageService {
         return new CustomResponse(200, "Language updated successfully", HttpStatus.OK);
     }
 
-    public CustomResponse deleteLanguage(long id) throws ResourceNotFound {
+    public CustomResponse deleteLanguage(long id) {
         var language = repository.findById(id)
                 .orElseThrow(()-> new ResourceNotFound("Resource not found with id"));
 

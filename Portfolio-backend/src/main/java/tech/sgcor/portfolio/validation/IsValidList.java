@@ -8,11 +8,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = LocalDatePatternValidator.class)
-public @interface ValidLocalDate {
-    String message() default "Invalid date format. Provide date in pattern 'yyyy-MM-dd'.";
+@Constraint(validatedBy = ValidListValidator.class)
+public @interface IsValidList {
+
+    String message() default "Field must be a non-null List";
     Class<?>[] groups() default {};
-    Class<? extends Payload> [] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }

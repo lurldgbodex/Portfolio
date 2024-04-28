@@ -5,47 +5,48 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import tech.sgcor.portfolio.validation.ValidLocalDate;
-
 
 import java.time.LocalDate;
 
 @Data
 public class CreateRequest {
-    @NotBlank(message = "first_name is required")
+    @NotBlank(message = "una no get first_name?")
     private String first_name;
 
-    @NotBlank(message = "last_name is required")
+    @NotBlank(message = "Una no get last_name?")
     private String last_name;
 
     private String middle_name;
 
-    @NotBlank(message = "Address is required")
+    @NotBlank(message = "una no get address ba?")
     private String address;
 
-    @NotNull(message = "Date of Birth (dob) is required")
-    @ValidLocalDate
-    private LocalDate dob;
+    @NotNull(message = "una drop from heaven ba. oga provide una date of birth(dob) jare.")
+    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "dob na for this pattern 'yyyy-MM-dd' we dey accept.")
+    private String dob;
 
-    @NotBlank(message = "title is required")
+    @NotBlank(message = "make una provide ur title na")
     private String title;
 
-    @Pattern(regexp = "^\\+\\d{11,15}$", message = "numbers between 11 and 15 character starting with +")
-    @NotBlank(message = "phoneNumber is required")
+    @Pattern(regexp = "^\\+\\d{11,15}$", message = "valid number na between 11 and 15 character. start with ur country code. e.g +234")
+    @NotBlank(message = "na only adult fit access if una no get phone")
     private String phone_number;
 
-    @NotBlank(message = "Summary is required")
+    @NotBlank(message = "make una provide short bio as summary")
     private String summary;
 
-    @Email(message = "Provide a valid email address")
-    @NotBlank(message = "Email is required")
+    @Email(message = "na only valid email we dey accept")
+    @NotBlank(message = "una no get email abi")
     private String email;
 
-    @NotBlank(message = "Github url is required")
+    @NotBlank(message = "shey u no be developer ni. how u no get github?")
     private String github;
 
-    @NotBlank(message = "Linkedin profile url is required")
+    @NotBlank(message = "how u no go get linkedin for this generation")
     private String linkedin;
+
+    @NotBlank(message = "make una provide una profile image_url")
+    private String image_url;
 
     private String medium;
 }

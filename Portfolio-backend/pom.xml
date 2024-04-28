@@ -60,8 +60,23 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -90,6 +105,18 @@
 					<testFailureIgnore>true</testFailureIgnore>
 					<redirectTestOutputToFile>false</redirectTestOutputToFile>
 					<trimStackTrace>false</trimStackTrace>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.2.1</version>
+				<configuration>
+					<from>
+						<image>eclipse-temurin:17.0.4.1_1-jre</image></from>
+					<to>
+						<image>lurldgbodex/portfolio-api:1.0.0</image></to>
+
 				</configuration>
 			</plugin>
 		</plugins>

@@ -1,6 +1,5 @@
 package tech.sgcor.portfolio.about;
 
-import java.time.LocalDate;
 import java.util.Map;
 
 public record AboutResponse(

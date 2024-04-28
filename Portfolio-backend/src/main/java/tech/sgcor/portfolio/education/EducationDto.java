@@ -2,10 +2,9 @@ package tech.sgcor.portfolio.education;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDate;
 
 @Data
 @Builder
@@ -24,7 +23,9 @@ public class EducationDto {
     @NotBlank(message = "description is required")
     private String description;
     @NotNull(message = "start_date is required")
-    private LocalDate start_date;
+    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "Invalid date format. Provide date in pattern 'yyyy-MM-dd'.")
+    private String start_date;
     @NotNull(message = "end_date is required")
-    private LocalDate end_date;
+    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "Invalid date format. Provide date in pattern 'yyyy-MM-dd'.")
+    private String end_date;
 }

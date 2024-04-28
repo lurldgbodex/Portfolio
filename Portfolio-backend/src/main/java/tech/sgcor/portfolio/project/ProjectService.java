@@ -2,12 +2,10 @@ package tech.sgcor.portfolio.project;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
+import tech.sgcor.portfolio.exceptions.BadRequestException;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
 import tech.sgcor.portfolio.shared.SharedService;
@@ -17,14 +15,13 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 @Service
-@Validated
 @RequiredArgsConstructor
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final ProjectDetailsRepository projectDetailsRepository;
 
     @Transactional
-    public Project createProject(@Valid ProjectDto request) {
+    public Project createProject(ProjectDto request) {
         Project project = new Project();
 
         project.setName(request.getName());
@@ -50,8 +47,7 @@ public class ProjectService {
     }
 
     @Transactional
-    public CustomResponse updateProject(
-            long id, ProjectUpdate request) throws ResourceNotFound, BadRequestException {
+    public CustomResponse updateProject(long id, ProjectUpdate request) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound("Project not found with id"));
 
@@ -101,8 +97,7 @@ public class ProjectService {
         return new CustomResponse(200, "Project updated successfully", HttpStatus.OK);
     }
 
-    public CustomResponse updateDetails(
-            long id, @Valid ProjectDetailsUpdate request) throws ResourceNotFound {
+    public CustomResponse updateDetails(long id, ProjectDetailsUpdate request) {
         ProjectDetails detail = projectDetailsRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound("Project detail not found with id"));
 
@@ -114,7 +109,7 @@ public class ProjectService {
     }
 
     @Transactional
-    public CustomResponse deleteProject(long id) throws ResourceNotFound {
+    public CustomResponse deleteProject(long id) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound("Project not found with id"));
         projectRepository.delete(project);

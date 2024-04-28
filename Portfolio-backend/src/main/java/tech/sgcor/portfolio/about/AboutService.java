@@ -2,44 +2,42 @@ package tech.sgcor.portfolio.about;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
+import tech.sgcor.portfolio.exceptions.BadRequestException;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
 import tech.sgcor.portfolio.shared.SharedService;
 import tech.sgcor.portfolio.user.User;
-import tech.sgcor.portfolio.user.UserRepository;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.stream.Stream;
 
 @Service
-@Validated
 @Transactional
 @RequiredArgsConstructor
 public class AboutService {
     private final AboutRepository aboutRepository;
-    private final UserRepository userRepository;
 
-    public About getAbout(Long aboutId) {
-        return aboutRepository.findAboutWithUserById(aboutId);
+    public About getAbout(Long userId) {
+        return aboutRepository.findAboutWithUserById(userId)
+                .orElseThrow(() -> new ResourceNotFound("about no dey for user with id " + userId));
     }
 
-    public About add(@Valid CreateRequest request) {
+    public About add(CreateRequest request) {
         User user = new User();
         user.setFirstName(request.getFirst_name());
         user.setLastName(request.getLast_name());
         user.setMiddleName(SharedService.isNotBlank(
                 request.getMiddle_name()) ? request.getMiddle_name() : null);
+        user.setImageUrl(request.getImage_url());
 
         var about = About.builder()
                 .user(user)
                 .email(request.getEmail())
-                .dob(request.getDob())
+                .dob(LocalDate.parse(request.getDob()))
                 .title(request.getTitle())
                 .address(request.getAddress())
                 .phoneNumber(request.getPhone_number())
@@ -54,12 +52,8 @@ public class AboutService {
     }
 
     public CustomResponse update(
-            Long id, @Valid UpdateRequest request) throws ResourceNotFound, BadRequestException {
-        var about = aboutRepository.findAboutWithUserById(id);
-
-        if (about == null) {
-            throw new ResourceNotFound("About not found with id");
-        }
+            Long userId, UpdateRequest request) {
+        About about = getAbout(userId);
 
         boolean allFieldsBlank = Stream.of(
                 Objects.toString(request.getTitle(), ""),
@@ -73,16 +67,15 @@ public class AboutService {
                 Objects.toString(request.getMedium(), ""),
                 Objects.toString(request.getFirst_name(), ""),
                 Objects.toString(request.getLast_name(), ""),
+                Objects.toString(request.getImage_url(), ""),
                 Objects.toString(request.getMiddle_name(), "")
         ).allMatch(StringUtils::isBlank);
 
         if (allFieldsBlank) {
-            throw new BadRequestException("At least one field must be non-blank to perform the update");
+            throw new BadRequestException("wetin u wan update?");
         }
 
-        Long userId = about.getUser().getId();
-
-        User user = userRepository.findById(userId).orElseThrow();
+        User user = about.getUser();
 
         user.setFirstName(SharedService.isNotBlank(request.getFirst_name())
                 ? request.getFirst_name() : user.getFirstName());
@@ -90,13 +83,15 @@ public class AboutService {
                 ? request.getLast_name() : user.getLastName());
         user.setMiddleName(SharedService.isNotBlank(request.getMiddle_name())
                 ? request.getMiddle_name() : user.getMiddleName());
+        user.setImageUrl(SharedService.isNotBlank(request.getImage_url())
+                ? request.getImage_url() : user.getImageUrl());
 
         about.setUser(user);
         about.setTitle(SharedService.isNotBlank(request.getTitle())
                 ? request.getTitle() : about.getTitle());
         about.setPhoneNumber(SharedService.isNotBlank(request.getPhone_number())
                 ? request.getPhone_number() : about.getPhoneNumber());
-        about.setDob((request.getDob() != null) ? request.getDob() : about.getDob());
+        about.setDob((request.getDob() != null) ? LocalDate.parse(request.getDob()) : about.getDob());
         about.setAddress(SharedService.isNotBlank(request.getAddress())
                 ? request.getAddress() : about.getAddress());
         about.setEmail(SharedService.isNotBlank(request.getEmail())
@@ -113,20 +108,19 @@ public class AboutService {
         aboutRepository.save(about);
 
         return new CustomResponse(
-                         HttpStatus.OK.value(),
-                         "update successful",
+                         200,
+                         "una update dey successful",
                          HttpStatus.OK
                  );
     }
 
-    public CustomResponse delete(Long id) throws ResourceNotFound {
-        var about = aboutRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFound("Data not found with id " + id)
-                );
-        aboutRepository.deleteById(id);
+    public CustomResponse delete(Long userId) {
+        About about = getAbout(userId);
+
+        aboutRepository.delete(about);
         return new CustomResponse(
                 HttpStatus.OK.value(),
-                "about successfully deleted with id " + id,
+                "una don successfully delete about for user wey get the id " + userId,
                 HttpStatus.OK
         );
     }

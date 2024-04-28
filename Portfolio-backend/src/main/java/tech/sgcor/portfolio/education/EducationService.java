@@ -1,22 +1,20 @@
 package tech.sgcor.portfolio.education;
 
 import io.micrometer.common.util.StringUtils;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
+import tech.sgcor.portfolio.exceptions.BadRequestException;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
 import tech.sgcor.portfolio.shared.SharedService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
 @Service
-@Validated
 @RequiredArgsConstructor
 public class EducationService {
     private final EducationRepository repository;
@@ -25,7 +23,7 @@ public class EducationService {
         return repository.findByUserId(userId);
     }
 
-    public Education createEducation(@Valid EducationDto request) {
+    public Education createEducation(EducationDto request) {
         Education education = new Education();
 
         education.setSchool(request.getSchool());
@@ -34,14 +32,14 @@ public class EducationService {
         education.setDescription(request.getDescription());
         education.setGrade(request.getGrade());
         education.setCourse(request.getCourse());
-        education.setStartDate(request.getStart_date());
-        education.setEndDate(request.getEnd_date());
+        education.setStartDate(LocalDate.parse(request.getStart_date()));
+        education.setEndDate(LocalDate.parse(request.getEnd_date()));
 
         return repository.save(education);
     }
 
     public Education updateEducation(
-            Long id, @Valid UpdateRequest request) throws ResourceNotFound, BadRequestException {
+            Long id, UpdateRequest request) {
         var education = repository.findById(id)
                 .orElseThrow(()-> new ResourceNotFound("Resource not found with id"));
 
@@ -68,9 +66,9 @@ public class EducationService {
         education.setDescription(SharedService.isNotBlank(request.getDescription())
                 ? request.getDescription() : education.getDescription());
         education.setStartDate(request.getStart_date() != null
-                ? request.getStart_date() : education.getStartDate());
+                ? LocalDate.parse(request.getStart_date()) : education.getStartDate());
         education.setEndDate(request.getEnd_date() != null
-                ? request.getEnd_date() : education.getEndDate());
+                ? LocalDate.parse(request.getEnd_date()) : education.getEndDate());
         education.setCourse(SharedService.isNotBlank(request.getCourse())
                 ? request.getCourse() : education.getCourse());
 

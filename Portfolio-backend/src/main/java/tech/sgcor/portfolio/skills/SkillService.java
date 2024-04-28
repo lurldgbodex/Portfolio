@@ -2,12 +2,10 @@ package tech.sgcor.portfolio.skills;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
+import tech.sgcor.portfolio.exceptions.BadRequestException;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
 import tech.sgcor.portfolio.shared.SharedService;
@@ -17,14 +15,13 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 @Service
-@Validated
 @RequiredArgsConstructor
 public class SkillService {
     private final SkillRepository skillRepository;
     private final SkillTypeRepository skillTypeRepository;
 
     @Transactional
-    public SkillType createSkill(@Valid SkillRequest request) {
+    public SkillType createSkill(SkillRequest request) {
         SkillType skillType = new SkillType();
         skillType.setName(request.getName());
         skillType.setUserId(request.getUser_id());
@@ -46,7 +43,7 @@ public class SkillService {
     }
 
     public CustomResponse updateSpecificSkill(
-            long id, @Valid UpdateSkill request) throws ResourceNotFound {
+            long id, UpdateSkill request) {
 
         var skill = skillRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFound("Resource not found with id"));
@@ -59,7 +56,7 @@ public class SkillService {
 
     @Transactional
     public CustomResponse updateSkill(
-            SkillUpdateRequest request, long id) throws ResourceNotFound, BadRequestException {
+            SkillUpdateRequest request, long id) {
         var updateSkillType = skillTypeRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFound("Resource not found with id"));
 
@@ -104,7 +101,7 @@ public class SkillService {
     }
 
     @Transactional
-    public CustomResponse deleteSkill(long id) throws ResourceNotFound {
+    public CustomResponse deleteSkill(long id) {
         skillTypeRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFound("Resource not found with id"));
 

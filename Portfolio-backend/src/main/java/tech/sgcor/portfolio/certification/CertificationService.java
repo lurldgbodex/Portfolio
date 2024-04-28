@@ -2,22 +2,20 @@ package tech.sgcor.portfolio.certification;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
+import tech.sgcor.portfolio.exceptions.BadRequestException;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
 import tech.sgcor.portfolio.shared.CustomResponse;
 import tech.sgcor.portfolio.shared.SharedService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
 @Service
-@Validated
 @RequiredArgsConstructor
 public class CertificationService {
     private final CertificationRepository repository;
@@ -28,11 +26,11 @@ public class CertificationService {
     }
 
     @Transactional
-    public Certification addCertification(@Valid CertificationDto request) {
+    public Certification addCertification(CertificationDto request) {
         Certification certification = new Certification();
         certification.setName(request.getName());
         certification.setBody(request.getBody());
-        certification.setDate(request.getDate());
+        certification.setDate(LocalDate.parse(request.getDate()));
         certification.setUserId(request.getUser_id());
 
         List<CertificationDetails> detailsList = request.getDetails()
@@ -49,9 +47,9 @@ public class CertificationService {
 
     @Transactional
     public CustomResponse updateCertification(
-            Long id, UpdateCertification request) throws ResourceNotFound, BadRequestException {
+            Long id, UpdateCertification request) {
         Certification certification = repository.findById(id)
-                .orElseThrow(()-> new ResourceNotFound("Certification not found with id"));
+                .orElseThrow(()-> new ResourceNotFound("una certificate with id " + id + " no dey"));
 
         boolean allFieldsBlank = Stream.of(
                 Objects.toString(request.getName(), ""),
@@ -61,7 +59,7 @@ public class CertificationService {
         ).allMatch(StringUtils::isBlank);
 
         if (allFieldsBlank) {
-            throw new BadRequestException("You need to provide the fields you want to update");
+            throw new BadRequestException("wetin u wan update?");
         }
 
         certification.setName(SharedService.isNotBlank(request.getName()) ?
@@ -69,7 +67,7 @@ public class CertificationService {
         certification.setBody(SharedService.isNotBlank(request.getBody()) ?
                 request.getBody() : certification.getBody());
         certification.setDate(request.getDate() != null
-                ? request.getDate() : certification.getDate());
+                ? LocalDate.parse(request.getDate()) : certification.getDate());
 
         repository.save(certification);
 
@@ -97,21 +95,21 @@ public class CertificationService {
 
         return new CustomResponse(
                 200,
-                "Certification updated successfully",
+                "una certificate update dey successful",
                 HttpStatus.OK
         );
     }
 
     public CustomResponse updateCertificationDetail(
-            Long id, @Valid UpdateDetailRequest request) throws ResourceNotFound {
+            Long id, UpdateDetailRequest request) throws ResourceNotFound {
         CertificationDetails detail = detailsRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFound("Certification Detail not found with id"));
+                .orElseThrow(()-> new ResourceNotFound("una certificate detail with id " + id + " no dey"));
 
         detail.setDetails(request.getDetail());
 
         detailsRepository.save(detail);
 
-        var message = "Certification detail Successfully updated";
+        var message = "una certificate update dey successful";
 
         return new CustomResponse(200, message, HttpStatus.OK);
     }
@@ -119,11 +117,11 @@ public class CertificationService {
     @Transactional
     public CustomResponse deleteCertification(Long id) throws ResourceNotFound {
         Certification certification = repository.findById(id)
-                .orElseThrow(()-> new ResourceNotFound("Certification not found with id"));
+                .orElseThrow(()-> new ResourceNotFound("una certificate with id " + id + " no dey"));
 
         repository.delete(certification);
 
-        var message = "Certification deleted successfully";
+        var message = "una don comot the certificate";
         return new CustomResponse(200, message, HttpStatus.OK);
     }
 }

@@ -10,8 +10,6 @@ The application uses spring security for securing endpoints and providing author
 3. [Features](#features)
 4. [Folder Structure](#folder-structure)
 5. [Docker](#docker)
-6. [Contributing](#contributing)
-7. [License](#license)
 
 ## Prerequisites
 - [Java](https://www.java.com/en/download/)
@@ -61,6 +59,3 @@ The application and MySQL database are containerized using Docker. You can find 
 ```bash
 docker-compose up
 ```
-
-## Contributing
-Contributions to the Portfolio Backend API are welcome! Feel free to fork the repository and submit pull requests.

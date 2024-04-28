@@ -1,14 +1,14 @@
 package tech.sgcor.portfolio.about;
 
-import org.apache.coyote.BadRequestException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
+import tech.sgcor.portfolio.exceptions.BadRequestException;
 import tech.sgcor.portfolio.exceptions.ResourceNotFound;
-import tech.sgcor.portfolio.shared.CustomResponse;
+import tech.sgcor.portfolio.user.User;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -27,53 +27,65 @@ class AboutServiceTest {
 
     @Test
     void getAboutSuccessTest() throws ResourceNotFound {
+        User user = new User();
+        user.setFirstName("segun");
+        user.setLastName("gbodi");
+        user.setId(8L);
         Long id = 40L;
+
         var about = new About();
-        about.setName("test");
+        about.setUser(user);
         about.setId(id);
         about.setEmail("test-mail");
         about.setDob(LocalDate.now());
 
-        given(aboutRepository.findById(id)).willReturn(Optional.of(about));
+        given(aboutRepository.findAboutWithUserById(user.getId())).willReturn(Optional.of(about));
 
-        var req = underTest.getAbout(id);
+        var req = underTest.getAbout(user.getId());
 
-        verify(aboutRepository, times(1)).findById(id);
-        assertThat(req.name()).isEqualTo(about.getName());
-        assertThat(req.id()).isEqualTo(about.getId());
-        assertThat(req.email()).isEqualTo(about.getEmail());
-        assertThat(req.socials()).containsKeys("github", "linkedin", "medium");
+        verify(aboutRepository, times(1)).findAboutWithUserById(user.getId());
+
+        assertThat(req.getId()).isEqualTo(about.getId());
+        assertThat(req.getEmail()).isEqualTo(about.getEmail());
+        assertThat(req.getDob()).isEqualTo(about.getDob());
+        assertThat(req.getUser().getFirstName()).isEqualTo(user.getFirstName());
+        assertThat(req.getUser().getId()).isEqualTo(user.getId());
     }
 
     @Test
     void getAboutNotFoundTest() {
         Long id = 8L;
 
-        given(aboutRepository.findById(id)).willReturn(Optional.empty());
+        given(aboutRepository.findAboutWithUserById(id)).willReturn(Optional.empty());
 
         assertThatThrownBy(() -> underTest.getAbout(id))
                 .isInstanceOf(ResourceNotFound.class)
-                .hasMessageContaining("Data not found with id " + id);
+                .hasMessageContaining("about no dey for user with id " + id);
 
-        verify(aboutRepository, times(1)).findById(id);
+        verify(aboutRepository, times(1)).findAboutWithUserById(id);
     }
 
     @Test
     void addSuccessTest() {
         var request = new CreateRequest();
 
-        request.setName("test-name");
+        User user = new User();
+        user.setFirstName("Idan");
+
         request.setTitle("test-title");
         request.setAddress("test-address");
         request.setPhone_number("+2340011223344");
+        request.setFirst_name("Idan");
+        request.setDob("1999-10-19");
 
         var about = new About();
-        about.setName(request.getName());
         about.setTitle(request.getTitle());
         about.setAddress(request.getAddress());
         about.setPhoneNumber(request.getPhone_number());
+        about.setDob(LocalDate.parse(request.getDob()));
+        about.setUser(user);
 
-        given(underTest.add(request)).willReturn(about);
+        given(aboutRepository.save(about)).willReturn(about);
 
         var res = underTest.add(request);
 
@@ -81,63 +93,109 @@ class AboutServiceTest {
         verify(aboutRepository, times(1)).save(about);
 
         assertThat(res).isInstanceOf(About.class);
-        assertThat(res).hasFieldOrPropertyWithValue("name", about.getName());
     }
 
     @Test
-    void updateSuccessTest() throws ResourceNotFound, BadRequestException {
-        Long id = 10L;
+    void partialUpdateSuccessTest() {
+        Long userId = 10L;
+        User user = new User();
+        user.setLastName("Apata");
+        user.setId(userId);
+
         var about = new About();
+        about.setUser(user);
+        about.setTitle("Bad-Stopper");
 
         var req = new UpdateRequest();
         req.setAddress("new_address");
+        req.setFirst_name("Ijaya");
 
 
-        given(aboutRepository.findById(id)).willReturn(Optional.of(about));
+        given(aboutRepository.findAboutWithUserById(userId)).willReturn(Optional.of(about));
 
-        var res = underTest.update(id, req);
+        var res = underTest.update(userId, req);
 
         assertThat(res.code()).isEqualTo(200);
-        assertThat(res.message()).isEqualTo("update successful");
+        assertThat(res.message()).isEqualTo("una update dey successful");
 
-        verify(aboutRepository, times(1)).findById(id);
+        verify(aboutRepository, times(1)).findAboutWithUserById(userId);
+        verify(aboutRepository, times(1)).save(any(About.class));
+    }
+
+    @Test
+    void fullUpdateSuccessTest() {
+        Long userId = 10L;
+        User user = new User();
+        user.setLastName("Apata");
+        user.setId(userId);
+
+        var about = new About();
+        about.setUser(user);
+        about.setTitle("Bad-Stopper");
+
+        var req = new UpdateRequest();
+        req.setAddress("new_address");
+        req.setFirst_name("Ijaya");
+        req.setLast_name("Hmm");
+        req.setDob(LocalDate.now().toString());
+        req.setEmail("david@mail.com");
+        req.setTitle("Enforcer");
+        req.setGithub("https://github.com/ijaya-apata");
+        req.setLinkedin("https://linkedin.com/in/ijaya-apata");
+        req.setMedium("https://medium.com/ijaya-apata");
+        req.setMiddle_name("Piti");
+        req.setPhone_number("+223889873");
+        req.setSummary("Ijaya omo eniyan. Apatapiti Akoni.");
+
+
+        given(aboutRepository.findAboutWithUserById(userId)).willReturn(Optional.of(about));
+
+        var res = underTest.update(userId, req);
+
+        assertThat(res.code()).isEqualTo(200);
+        assertThat(res.message()).isEqualTo("una update dey successful");
+
+        verify(aboutRepository, times(1)).findAboutWithUserById(userId);
+        verify(aboutRepository, times(1)).save(any(About.class));
     }
 
     @Test
     void updateNotFoundTest() {
         Long id = 2L;
         var req = new UpdateRequest();
-        req.setName("update-test");
 
-        given(aboutRepository.findById(id)).willReturn(Optional.empty());
+        given(aboutRepository.findAboutWithUserById(id)).willReturn(Optional.empty());
 
         assertThatThrownBy(() -> underTest.update(id, req))
                 .isInstanceOf(ResourceNotFound.class)
-                .hasMessageContaining("Data not found with id " + id);
+                .hasMessageContaining("about no dey for user with id " + id);
     }
 
     @Test
-    void deleteSuccessTest() throws ResourceNotFound {
-        Long id = 1L;
+    void updateNoData() {
+        Long userId = 2L;
+        var req = new UpdateRequest();
 
-        given(aboutRepository.findById(id)).willReturn(Optional.of(new About()));
+        given(aboutRepository.findAboutWithUserById(userId)).willReturn(Optional.of(new About()));
 
-        var res = underTest.delete(id);
+        assertThatThrownBy(() -> underTest.update(userId, req))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("wetin u wan update?");
+    }
+
+    @Test
+    void deleteSuccessTest() {
+        Long userId = 1L;
+        var about = About.builder().build();
+
+        given(aboutRepository.findAboutWithUserById(userId)).willReturn(Optional.of(about));
+
+        var res = underTest.delete(userId);
 
         assertThat(res.code()).isEqualTo(200);
-        assertThat(res.message()).isEqualTo("about successfully deleted with id " + id);
+        assertThat(res.message()).isEqualTo("una don successfully delete about for user wey get the id " + userId);
         assertThat(res.status()).isEqualTo(HttpStatus.OK);
 
-        verify(aboutRepository, times(1)).deleteById(id);
-    }
-
-    @Test
-    void deleteNotFoundTest() {
-        Long id = 2L;
-        given(aboutRepository.findById(id)).willReturn(Optional.empty());
-
-        assertThatThrownBy(() -> underTest.delete(id))
-                .isInstanceOf(ResourceNotFound.class)
-                .hasMessageContaining("Data not found with id " + id);
+        verify(aboutRepository, times(1)).delete(about);
     }
 }

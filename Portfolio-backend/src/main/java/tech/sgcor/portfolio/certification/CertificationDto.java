@@ -2,10 +2,10 @@ package tech.sgcor.portfolio.certification;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import tech.sgcor.portfolio.validation.ValidLocalDate;
+import tech.sgcor.portfolio.validation.IsValidList;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -16,9 +16,9 @@ public class CertificationDto {
     private String name;
     @NotBlank(message = "body is required and should not be blank")
     private String body;
-    @ValidLocalDate
     @NotNull(message = "date is required and should not be null")
-    private LocalDate date;
-    @NotNull(message = "details is required and should be a list")
+    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "Invalid date format. Provide date in pattern 'yyyy-MM-dd'.")
+    private String date;
+    @IsValidList(message = "details na list e dey expect and e no fit empty")
     private List<String> details;
 }

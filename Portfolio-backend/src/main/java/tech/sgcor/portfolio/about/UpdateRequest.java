@@ -4,9 +4,6 @@ import jakarta.validation.constraints.Email;
 
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import tech.sgcor.portfolio.validation.ValidLocalDate;
-
-import java.time.LocalDate;
 
 @Data
 public class UpdateRequest {
@@ -15,20 +12,22 @@ public class UpdateRequest {
     private String middle_name;
     private String address;
 
-    @ValidLocalDate
-    private LocalDate dob;
+    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "na the patter for valid date be this 'yyyy-MM-dd'.")
+    private String dob;
 
     private String title;
 
-    @Pattern(regexp = "^\\+\\d{11,15}$", message = "numbers between 11 and 15 character starting with +")
+    @Pattern(regexp = "^\\+\\d{11,15}$", message = "valid number na between 11 and 15 character. start with ur country code. e.g +234")
     private String phone_number;
 
     private String summary;
 
-    @Email(message = "Please provide a valid email")
+    @Email(message = "na only valid email we dey accept")
     private String email;
 
     private String github;
     private String linkedin;
     private String medium;
+
+    private String image_url;
 }
