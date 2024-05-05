@@ -1,0 +1,41 @@
+.title {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.language {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.lang {
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.score {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+}
+
+.lang_tit {
+  margin-bottom: 0;
+}
+
+.lang_sub {
+  margin-bottom: 0;
+}
+
+.noData {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .title {
+    text-align: center;
+  }
+}

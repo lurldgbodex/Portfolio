@@ -1,0 +1,54 @@
+.title {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+.subTitle {
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.skill {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.skillType {
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.skillTypeSkill {
+  font-size: 0.8rem;
+}
+
+.score {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+}
+
+.skillTit {
+  margin-bottom: 0;
+}
+
+.skillSub {
+  margin-bottom: 0;
+}
+
+.noData {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .title {
+    text-align: center;
+  }
+
+  .subTitle {
+    text-align: center;
+  }
+}
