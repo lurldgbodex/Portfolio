@@ -1,0 +1,50 @@
+.bio {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 1);
+  gap: 50px;
+  border: 1px solid rgba(255, 180, 0, 1);
+  border-radius: 10px;
+}
+
+.bio_left {
+  gap: 20px;
+  padding: 60px;
+  width: 65%;
+}
+
+.summary {
+  text-align: justify;
+  width: 90%;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bio_span {
+  color: rgba(255, 180, 0, 1);
+}
+
+.button {
+  background-color: rgba(255, 180, 0, 1);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 18px;
+}
+
+.loading,
+.error {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 20px;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .bio {
+    display: none;
+  }
+}

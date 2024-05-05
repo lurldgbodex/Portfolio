@@ -1,0 +1,114 @@
+.sideBar {
+  width: 26%;
+  background-color: rgba(255, 255, 255, 1);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  gap: 10px;
+  min-width: 200px;
+}
+
+.image_div {
+  margin-top: 20px;
+  width: 85px;
+  align-self: center;
+}
+
+.image {
+  object-fit: cover;
+  border-radius: 50%;
+  width: 100%;
+}
+
+.title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+.sub_title {
+  margin-top: 3px;
+  font-weight: 200;
+  text-align: center;
+  font-style: italic;
+}
+
+.socials {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.soc {
+  background: rgba(255, 180, 0, 1);
+  border-radius: 50%;
+  font-size: 1.3rem;
+  padding: 4px;
+  color: black;
+}
+
+.socLinks {
+  cursor: pointer;
+}
+
+.divider {
+  background-color: rgba(210, 210, 210, 0.8);
+  height: 1px;
+  width: 90%;
+  margin-top: 0px;
+  align-self: center;
+}
+
+.bio {
+  margin-bottom: 15px;
+}
+
+.button {
+  padding: 8px;
+  border: none;
+  background-color: rgba(255, 180, 0, 0.6);
+  transition: 0.4 ease-in;
+  display: flex;
+  margin: 8px;
+  font-size: 0.8rem;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: rgba(255, 180, 0, 0.8);
+  transition: 0.3s ease-in;
+}
+
+.button:active {
+  background: rgba(255, 180, 0, 1);
+  transition: 0.1s ease-in;
+}
+
+.noData {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .sideBar {
+    width: 95%;
+    border: 1px solid rgba(255, 180, 0, 1);
+  }
+  .image_div {
+    width: none;
+  }
+
+  .divider {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .sideBar {
+    width: 100%;
+  }
+}
