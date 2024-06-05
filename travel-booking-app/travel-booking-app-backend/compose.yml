@@ -1,0 +1,86 @@
+services: 
+  nats:
+    image: nats:2.10.16-alpine3.19
+    ports:
+      - 4222:4222
+    
+  mysql_db:
+    image: mysql:8.4.0
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_DATABASE=travel_booking_app_db
+      - MYSQL_USER=seguser12
+      - MYSQL_PASSWORD=password
+    ports:
+      - "3306:3306"
+
+  mongodb:
+    image: mongo:8.0.0-rc4-jammy
+    restart: always
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=travel_booking_app_db
+
+  api-gateway:
+    build: ./api-gateway
+    image: travel-app-api-gateway:v1.0.0
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./api-gateway/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - PORT=3000
+    depends_on:
+      - nats
+
+  user-service:
+    build: ./user-service
+    image: travel-app-user:v1.0.0
+    environment:
+      - MONGODB_URL=mongodb://root:password@mongodb:27017/travel_booking_app_db
+    volumes:
+      - ./user-service/src:/usr/src/app/src
+    command: npm run start:dev
+    depends_on:
+      - nats
+      - api-gateway
+      - mongodb
+      
+  airline-service:
+    build: ./airline-service
+    image: travel-app-airline:v1.0.0
+    environment:
+      - DB_HOST=mysql_db
+      - DB_PORT=3306
+      - DB_USERNAME=seguser12
+      - DB_PASSWORD=password
+      - DB_NAME=travel_booking_app_db
+    volumes:
+      - ./airline-service/src:/usr/src/app/src
+    command: npm run start:dev
+    depends_on:
+      - nats
+      - api-gateway
+      - mysql_db
+
+  flight-service:
+    build: ./flight-service
+    image: travel-app-flight:v1.0.0
+    environment:
+      - DB_HOST=mysql_db
+      - DB_PORT=3306
+      - DB_USERNAME=seguser12
+      - DB_PASSWORD=password
+      - DB_NAME=travel_booking_app_db
+    volumes:
+      - ./flight-service/src:/usr/src/app/src
+    command: npm run start:dev
+    depends_on:
+      - nats
+      - api-gateway
+      - mysql_db
