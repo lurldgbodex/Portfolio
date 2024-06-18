@@ -1,23 +1,19 @@
-# java base image
-FROM eclipse-temurin:17-jre-alpine AS builder
+FROM eclipse-temurin:17-jre-alpine as build
+LABEL authors="seguser"
+WORKDIR /workspace/app
 
-# create directory for the application
-RUN mkdir -p /app
+RUN mkdir -p target/extracted
 
-# set working directory
-WORKDIR /app
+ADD target/*.jar app.jar
+RUN java -Djarmode=layertools -jar app.jar extract --destination target/extracted
 
-# copy application code
-COPY --from=builder ./*.jar target/*.jar /app/
-
-# expose the spring boot application port
-EXPOSE 8080
-
-# define a second stage for the final image
 FROM eclipse-temurin:17-jre-alpine
+WORKDIR /workspace/app
+VOLUME /tmp
+ARG EXTRACTED=/workspace/app/target/extracted
+COPY --from=build ${EXTRACTED}/dependencies/ ./
+COPY --from=build ${EXTRACTED}/spring-boot-loader/ ./
+COPY --from=build ${EXTRACTED}/snapshot-dependencies/ ./
+COPY --from=build ${EXTRACTED}/application/ ./
 
-# copy the application har directly
-COPY --from=builder /app/*.jar /app/
-
-# entrypoint to run the application
-ENTRYPOINT ["java", "-jar", "/app/*.jar"]
+ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
