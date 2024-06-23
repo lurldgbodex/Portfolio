@@ -33,15 +33,18 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+        
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file portfolio-app/Portfolio-backend/pom.xml
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
       uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+      with:
+        path: portfolio-app/Portfolio-backend
 
     - name: Build docker image
-      run: docker build -t portfolio-api:latest app
+      run: docker build -t portfolio-api:v1.0.0 portfolio-app/Portfolio-backend
 
     - name: Push docker image to hub
       env:
@@ -49,8 +52,8 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
         echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-        docker tag my-spring-boot-app:latest $DOCKER_USERNAME/my-spring-boot-app:latest
-        docker push $DOCKER_USERNAME/my-spring-boot-app:latest
+        docker tag portfolio-api:v1.0.0 $DOCKER_USERNAME/portfolio-api:v1.0.0
+        docker push $DOCKER_USERNAME/portfolio-api:v1.0.0
 
   deploy:
     runs-on: ubuntu-lastest
@@ -62,7 +65,7 @@ jobs:
 
     - name: Deploy with docker compose
       run: |
-        docker-compose -f app/docker-compose.yml up -d
+        docker-compose -f portfolio-app/Portfolio-backend/docker-compose.yml up -d
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
