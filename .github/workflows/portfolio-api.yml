@@ -36,9 +36,9 @@ jobs:
         
     - name: Build with Maven using docker compose
       run: |
-        docker-compose -f portfolio-app/Portfolio-backend/compose.yml up -d
+        docker-compose -f portfolio-app/Portfolio-backend/compose.yaml up -d
         docker-compose run --rm portfolio-app/Portfolio-backend mvn -B package
-        docker-compose -f portfolio-app/Portfolio-backend/compose.yml down
+        docker-compose -f portfolio-app/Portfolio-backend/compose.yaml down
         
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
@@ -68,7 +68,7 @@ jobs:
 
     - name: Deploy with docker compose
       run: |
-        docker-compose -f portfolio-app/Portfolio-backend/compose.yml up -d
+        docker-compose -f portfolio-app/Portfolio-backend/compose.yaml up -d
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
