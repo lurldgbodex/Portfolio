@@ -33,9 +33,9 @@ public class Config {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests((request) -> request
                         .requestMatchers("/api/users/**").permitAll()
-                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/api/admins/**").hasRole("ADMIN")
+                        .requestMatchers("/actuator/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())

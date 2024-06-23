@@ -1,6 +1,3 @@
-
-version: "3.8"
-
 services:
   mysql:
     image: 'mysql:latest'
@@ -15,17 +12,23 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
-#  app:
-#    image: lurldgbodex/portfolio-api:1.0.0
-#    restart: always
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - mysql
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/portfolio_db
-#      SPRING_DATASOURCE_USERNAME: seguser
-#      SPRING_DATASOURCE_PASSWORD: portfolio-pass
+  portfolio-app:
+    container_name: portfolio-app
+    build: .
+    image: portfolio-api:v1.0.0
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    volumes:
+      - .:/app
+      - /app/tmp
+    environment:
+#      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/portfolio_db
+      SPRING_DATASOURCE_USERNAME: seguser
+      SPRING_DATASOURCE_PASSWORD: portfolio-pass
 
 volumes:
   mysql_data:
