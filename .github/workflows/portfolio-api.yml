@@ -10,10 +10,16 @@ name: CI for Portfolio-api
 
 on:
   push:
-    paths: portfolio-app/portfolio-backend/**
-    branches: [ "main" ]
+    branches: 
+      - 'main' 
+    paths: 
+      - 'portfolio-app/Portfolio-backend/**'
   pull_request:
-    branches: [ "main" ]
+    branches: 
+      - 'main'
+    paths: 
+      - 'portfolio-app/Portfolio-backend/**'
+  workflow_dispatch:
 
 jobs:
   build:
